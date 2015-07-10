@@ -44,6 +44,21 @@ module.exports = function(grunt) {
         ],
       },
     },
+    less: {
+      production: {
+        options: {
+          paths: [
+            "assets/less",
+            "assets/vendor"
+          ],
+          compress: true,
+          optimization: 0
+        },
+        files: {
+          "webroot/css/messages.css": "assets/less/messages.less",
+        }
+      }
+    },
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -96,6 +111,10 @@ module.exports = function(grunt) {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
       },
+      less: {
+          files: ["assets/less/*"],
+          tasks: ["less"],
+      },
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
         tasks: ['jshint:lib_test', 'qunit']
@@ -116,6 +135,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
 
   // Default task.
-  grunt.registerTask('default', ['bowerRequirejs','requirejs', 'copy']);
+  grunt.registerTask('default', ['bowerRequirejs','requirejs', 'copy', 'less']);
 
 };

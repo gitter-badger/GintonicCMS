@@ -6,6 +6,7 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->Html->css('AdminTheme.admin') ?>
+    <?= $this->Html->css('GintonicCMS.messages') ?>
 
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -27,6 +28,8 @@
             <?php echo $this->Flash->render(); ?>
             <?= $this->fetch('content') ?>
         </section>
+        <?= $this->element('GintonicCMS.Messages/chatbox') ?>
+        <section class="content">
       </div>
       <?= $this->element('GintonicCMS.footer') ?>
       <?= $this->element('GintonicCMS.rightbar') ?>
