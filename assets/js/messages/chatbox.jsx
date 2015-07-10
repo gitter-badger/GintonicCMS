@@ -1,10 +1,9 @@
 define(function(require) {
 
-    var HelloMessage = React.createClass({
-          render: function() {
-                  return <div>Hello {this.props.name}</div>;
-                    }
-    });
-
-    React.render(<HelloMessage name="John" />, mountNode);
+    var React = require('react');
+    React.render(
+        <h1>Hello, world!</h1>,
+        document.getElementById('example')
+    );
+    
 });

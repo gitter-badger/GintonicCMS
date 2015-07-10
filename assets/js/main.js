@@ -3,7 +3,7 @@ requirejs.config({
 
     ],
     paths: {
-        messages: "messages",
+        messages: "gintonic_c_m_s/js/messages",
         react: "../vendor/react/react-with-addons.min",
         JSXTransformer: "../vendor/jsx-requirejs-plugin/js/JSXTransformer",
         jsx: "../vendor/jsx-requirejs-plugin/js/jsx",
