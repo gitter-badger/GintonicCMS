@@ -1,3 +1,4 @@
+<?= $this->Require->req('jsx!messages/chatbox.jsx') ?>
 <div class="col-md-5">
     <div id="accordion" class="panel panel-default">
         <div class="panel-heading">

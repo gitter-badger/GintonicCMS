@@ -29,7 +29,6 @@
             <?= $this->fetch('content') ?>
         </section>
         <?= $this->element('GintonicCMS.Messages/chatbox') ?>
-        <section class="content">
       </div>
       <?= $this->element('GintonicCMS.footer') ?>
       <?= $this->element('GintonicCMS.rightbar') ?>

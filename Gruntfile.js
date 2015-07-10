@@ -13,6 +13,12 @@ module.exports = function(grunt) {
     // Task configuration.
     bowerRequirejs: {
         options: {
+            exclude: [
+                'react',
+                'jsxTransformer',
+                'jsx-requirejs-plugin',
+                'requirejs-text'
+            ],
             transitive: true
         },
         target: {
@@ -110,6 +116,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      requirejs: {
+        files: ["assets/js/**/*"],
+        tasks: ["requirejs"],
       },
       less: {
           files: ["assets/less/*"],
