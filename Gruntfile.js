@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     requirejs: {
       compile: {
         options: {
-          appDir:"assets/js",
+          appDir:"assets/tmp",
           baseUrl:"./",
           dir:"webroot/js",
           stubModules: ['jsx', 'text', 'JSXTransformer'],
@@ -44,7 +44,12 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      main: {
+      scripts: {
+        files: [
+          {expand: true, cwd: './assets/js/', src: ['**'], dest: 'assets/tmp'},
+        ],
+      },
+      vendor: {
         files: [
           {expand: true, cwd: './assets/vendor/', src: ['**'], dest: 'webroot/vendor/'},
         ],
@@ -64,6 +69,22 @@ module.exports = function(grunt) {
           "webroot/css/messages.css": "assets/less/messages.less",
         }
       }
+    },
+    react: {
+      dynamic_mappings: {
+        files: [
+          {
+            expand: true,
+            cwd: 'assets/tmp',
+            src: ['**/*.jsx'],
+            dest: 'assets/tmp',
+            ext: '.js'
+          }
+        ]
+      }
+    },
+    clean: {
+        tmp: ["assets/tmp"]
     },
     concat: {
       options: {
@@ -143,8 +164,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bower-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-react');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', ['bowerRequirejs','requirejs', 'copy', 'less']);
+  
+  grunt.registerTask('scripts', ['bowerRequirejs', 'copy:scripts','react','requirejs']);
+  grunt.registerTask('default', ['scripts', 'less', 'copy:vendor']);
 
 };

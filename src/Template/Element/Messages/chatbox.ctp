@@ -1,5 +1,5 @@
 <div id="example"></div> 
-<?= $this->Require->req('jsx!messages/chatbox') ?>
+<?= $this->Require->req('messages/chatbox') ?>
 <div class="col-md-5">
     <div id="accordion" class="panel panel-default">
         <div class="panel-heading">
