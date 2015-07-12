@@ -41,6 +41,23 @@ module.exports = function(grunt) {
           }],
           noBuildTxt: true
         }
+      },
+      dev: {
+        options: {
+          appDir:"assets/tmp",
+          baseUrl:"./",
+          dir:"webroot/js",
+          stubModules: ['jsx', 'text', 'JSXTransformer'],
+          paths: {
+              requireLib: '../../node_modules/requirejs/require',
+          },
+          modules:[{
+            name: "main",
+            include: "requireLib"
+          }],
+          noBuildTxt: true,
+          optimize: 'none'
+        }
       }
     },
     copy: {
@@ -140,7 +157,7 @@ module.exports = function(grunt) {
       },
       requirejs: {
         files: ["assets/js/**/*"],
-        tasks: ["requirejs"],
+        tasks: ["scripts"],
       },
       less: {
           files: ["assets/less/*"],
@@ -169,7 +186,8 @@ module.exports = function(grunt) {
 
   // Default task.
   
-  grunt.registerTask('scripts', ['bowerRequirejs', 'copy:scripts','react','requirejs']);
+  grunt.registerTask('scripts', ['bowerRequirejs', 'copy:scripts','react','requirejs:compile']);
+  grunt.registerTask('scripts:dev', ['bowerRequirejs', 'copy:scripts','react','requirejs:dev']);
   grunt.registerTask('default', ['scripts', 'less', 'copy:vendor']);
 
 };
