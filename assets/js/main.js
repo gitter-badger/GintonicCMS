@@ -3,7 +3,7 @@ requirejs.config({
 
     ],
     paths: {
-        messages: "gintonic_c_m_s/js/messages",
+        chat: "gintonic_c_m_s/js/chat",
         react: "../vendor/react/react-with-addons.min",
         reactDev: "../vendor/react/react-with-addons",
         classnames: "../vendor/classnames/index",

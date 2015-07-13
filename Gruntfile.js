@@ -101,7 +101,8 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-        tmp: ["assets/tmp"]
+        tmp: ["assets/tmp"],
+        webroot: ["webroot/js/**/*.jsx"],
     },
     concat: {
       options: {
