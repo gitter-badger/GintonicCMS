@@ -14,8 +14,8 @@
  */
 namespace GintonicCMS\Controller;
 
-use App\Controller\AppController;
 use Cake\Event\Event;
+use GintonicCMS\Controller\AppController;
 
 /**
  * Represents the Threads Controller
@@ -26,39 +26,25 @@ use Cake\Event\Event;
  */
 class ThreadsController extends AppController
 {
-
-    /**
-     * Call before executoin of every request, also set some action
-     * to access without login.
-     *
-     * @param Cake\Event\Event $event Describe the Events.
-     */
-    public function beforeFilter(Event $event)
+    public function index()
     {
-        parent::beforeFilter($event);
-        $this->Auth->allow([
-            'addUsers',
-            'create',
-            'get',
-            'removeUsers',
-            'retrieve',
-            'unread',
-            'unreadCount',
-        ]);
+        $threads = $this->Threads->find()->all();
+        $this->set(compact('threads'));
+        $this->set('_serialize', ['threads']);
     }
 
     /**
-     * Used to Authorized User to access requested action.
-     *
-     * @param array $user contain user detail.
-     * @return boolean Return true if action is allowed else return false.
+     * Returns the latest messages and users in a
+     * thread based on the id given in input
+     * 
+     * Example : $this->request->data['id'] = [1, 2]
      */
-    public function isAuthorized($user = null)
+    public function get()
     {
-        if (!empty($user)) {
-            return true;
-        }
-        return parent::isAuthorized($user);
+        $this->request->data['id'] = [1];
+        $threads = $this->Threads->find('conversation', $this->request->data);
+        $this->set(compact('threads'));
+        $this->set('_serialize', ['threads']);
     }
 
     /**
@@ -69,117 +55,103 @@ class ThreadsController extends AppController
      * then it will add user with id 2 and 3 in thread with Id 2
      * and return true if success else return false.
      */
-    public function addUsers()
-    {
-        $this->autoRender = false;
-        $users = $this->Threads->Users->find()->where(['Users.id IN' => $this->request->data['users']]);
-        $thread = $this->Threads->get($this->request->data['threadId']);
-        $success = $this->Threads->Users->link($thread, $users->toArray());
-        echo json_encode($success, JSON_NUMERIC_CHECK);
-    }
+    //public function addUsers()
+    //{
+    //    $this->autoRender = false;
+    //    $users = $this->Threads->Users->find()->where(['Users.id IN' => $this->request->data['users']]);
+    //    $thread = $this->Threads->get($this->request->data['threadId']);
+    //    $success = $this->Threads->Users->link($thread, $users->toArray());
+    //    echo json_encode($success, JSON_NUMERIC_CHECK);
+    //}
 
-    /**
-     * Allow to create New Thread,
-     * its take array of useIds by POST method as input.
-     * for Example $this->request->data['users'] = [2, 3]
-     * then it will create new Thread with user id 2 and 3 as Participant of that thread
-     * and return Thread Id of new created thread.
-     */
-    public function create()
-    {
-        $this->autoRender = false;
-        $thread = $this->Threads->newEntity($this->request->data['users'], ['associated' => ['Users']]);
-        $this->Threads->save($thread);
+    ///**
+    // * Allow to create New Thread,
+    // * its take array of useIds by POST method as input.
+    // * for Example $this->request->data['users'] = [2, 3]
+    // * then it will create new Thread with user id 2 and 3 as Participant of that thread
+    // * and return Thread Id of new created thread.
+    // */
+    //public function create()
+    //{
+    //    $this->autoRender = false;
+    //    $thread = $this->Threads->newEntity($this->request->data['users'], ['associated' => ['Users']]);
+    //    $this->Threads->save($thread);
 
-        $users = $this->Threads->Users->find()->where(['Users.id IN' => $this->request->data['users']]);
-        $this->Threads->Users->link($thread, $users->toArray());
+    //    $users = $this->Threads->Users->find()->where(['Users.id IN' => $this->request->data['users']]);
+    //    $this->Threads->Users->link($thread, $users->toArray());
 
-        echo json_encode($thread->id, JSON_NUMERIC_CHECK);
-    }
+    //    echo json_encode($thread->id, JSON_NUMERIC_CHECK);
+    //}
 
-    /**
-     * This Method take thread id as POST data input
-     * for Example $this->request->data['threads'] = [1, 2]
-     * then it Return detail of threads with 1 and 2.
-     * in thread detail it contain Message details, related to thread id and,
-     * User details, related to Messages.
-     */
-    public function get()
-    {
-        $this->autoRender = false;
-        $threads = $this->Threads->find('details', $this->request->data['threads']);
-        echo json_encode($threads, JSON_NUMERIC_CHECK);
-    }
+    ///**
+    // * Allow to remove thread participants from existing thread.
+    // * its take array of user ids and thread id as POST data in input and remove that
+    // * user Ids from thread.
+    // * for Example $this->request->data['users'] = [2] and $this->request->data['threadId'] = 1
+    // * then it will remove user whith id 2 from Thread with id 1.
+    // */
+    //public function removeUsers()
+    //{
+    //    $this->autoRender = false;
+    //    $users = $this->Threads->Users->find()->where([
+    //        'Users.id IN' => $this->request->data['users']
+    //    ]);
+    //    $thread = $this->Threads->get($this->request->data['threadId']);
+    //    $success = $this->Threads->Users->unlink($thread, $users->toArray());
+    //    echo json_encode($success, JSON_NUMERIC_CHECK);
+    //}
 
-    /**
-     * Allow to remove thread participants from existing thread.
-     * its take array of user ids and thread id as POST data in input and remove that
-     * user Ids from thread.
-     * for Example $this->request->data['users'] = [2] and $this->request->data['threadId'] = 1
-     * then it will remove user whith id 2 from Thread with id 1.
-     */
-    public function removeUsers()
-    {
-        $this->autoRender = false;
-        $users = $this->Threads->Users->find()->where([
-            'Users.id IN' => $this->request->data['users']
-        ]);
-        $thread = $this->Threads->get($this->request->data['threadId']);
-        $success = $this->Threads->Users->unlink($thread, $users->toArray());
-        echo json_encode($success, JSON_NUMERIC_CHECK);
-    }
+    ///**
+    // * This method gives Thread id based on participant count.
+    // * its take array of user id as POST input
+    // * for Example $this->request->data['users'] = [2,3]
+    // * and return thread id which have exact count participant is 2
+    // * because there is two user id in input array.
+    // */
+    //public function retrieve()
+    //{
+    //    $this->autoRender = false;
+    //    $users = $this->request->data['users'];
+    //    $threads = $this->Threads
+    //        ->find('withUsers', $users)
+    //        ->find('withUserCount', ['count' => count($users)])
+    //        ->order(['Threads.created' => 'DESC'])
+    //        ->first();
+    //    echo json_encode($threads, JSON_NUMERIC_CHECK);
+    //}
 
-    /**
-     * This method gives Thread id based on participant count.
-     * its take array of user id as POST input
-     * for Example $this->request->data['users'] = [2,3]
-     * and return thread id which have exact count participant is 2
-     * because there is two user id in input array.
-     */
-    public function retrieve()
-    {
-        $this->autoRender = false;
-        $users = $this->request->data['users'];
-        $threads = $this->Threads
-            ->find('withUsers', $users)
-            ->find('withUserCount', ['count' => count($users)])
-            ->order(['Threads.created' => 'DESC'])
-            ->first();
-        echo json_encode($threads, JSON_NUMERIC_CHECK);
-    }
+    ///**
+    // * This Method allow to get Thread id which have unread messages.
+    // * its take array of user id as POST input and give thread id based on that
+    // * if that user's hase any unread Messages.
+    // * for Example $this->request->data['users'] = [2] then
+    // * this method will return thread id if user 2 has any unread message else
+    // * return false;
+    // */
+    //public function unread()
+    //{
+    //    $this->autoRender = false;
+    //    $threadCount = $this->Threads
+    //        ->find('withUsers', $this->request->data['users'])
+    //        ->find('unread');
+    //    echo json_encode($threadCount, JSON_NUMERIC_CHECK);
+    //}
 
-    /**
-     * This Method allow to get Thread id which have unread messages.
-     * its take array of user id as POST input and give thread id based on that
-     * if that user's hase any unread Messages.
-     * for Example $this->request->data['users'] = [2] then
-     * this method will return thread id if user 2 has any unread message else
-     * return false;
-     */
-    public function unread()
-    {
-        $this->autoRender = false;
-        $threadCount = $this->Threads
-            ->find('withUsers', $this->request->data['users'])
-            ->find('unread');
-        echo json_encode($threadCount, JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * This Method allow to get total count of unread Thread which have unread messages.
-     * its take array of user id as POST input and give count based on that
-     * if that user's hase any unread Messages.
-     * for Example $this->request->data['users'] = [2] then
-     * this method will return count of unread thread if user 2 has any unread message else
-     * return false;
-     */
-    public function unreadCount()
-    {
-        $this->autoRender = false;
-        $threadCount = $this->Threads
-            ->find('withUsers', $this->request->data['users'])
-            ->find('unread')
-            ->count();
-        echo json_encode($threadCount, JSON_NUMERIC_CHECK);
-    }
+    ///**
+    // * This Method allow to get total count of unread Thread which have unread messages.
+    // * its take array of user id as POST input and give count based on that
+    // * if that user's hase any unread Messages.
+    // * for Example $this->request->data['users'] = [2] then
+    // * this method will return count of unread thread if user 2 has any unread message else
+    // * return false;
+    // */
+    //public function unreadCount()
+    //{
+    //    $this->autoRender = false;
+    //    $threadCount = $this->Threads
+    //        ->find('withUsers', $this->request->data['users'])
+    //        ->find('unread')
+    //        ->count();
+    //    echo json_encode($threadCount, JSON_NUMERIC_CHECK);
+    //}
 }

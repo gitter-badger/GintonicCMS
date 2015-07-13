@@ -82,14 +82,15 @@ class ThreadsTable extends Table
      * @param array $options the list of thread id formatted according to cake stadards
      * @return \Cake\ORM\Query The amended query
      */
-    public function findDetails(Query $query, array $options)
+    public function findConversation(Query $query, array $options)
     {
         return $query
-            ->where(['Threads.id IN' => $options])
+            ->where(['Threads.id IN' => $options['id']])
             ->contain([
                 'Messages' => [
                     'Users'
-                ]
+                ],
+                'Users'
             ])
             ->limit(10);
     }

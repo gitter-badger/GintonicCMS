@@ -18,7 +18,10 @@ Router::scope('/', ['plugin' => 'GintonicCMS'], function ($routes) {
     $routes->connect('/users/:action/*', ['controller' => 'Users']);
 
     $routes->connect('/messages', ['controller' => 'Messages']);
-    $routes->connect('/messages/:action/*', ['controller' => 'Messages']);
+    $routes->connect('/messages', ['controller' => 'Messages']);
+
+    $routes->connect('/threads/:action/*', ['controller' => 'Threads']);
+    $routes->connect('/threads/:action/*', ['controller' => 'Threads']);
 
 	$routes->connect('/settings/:action/*', ['controller' => 'Settings']);
 	
