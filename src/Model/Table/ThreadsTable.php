@@ -117,6 +117,23 @@ class ThreadsTable extends Table
     }
 
     /**
+     * Checks if the given id is registered to the thread
+     *
+     * @param int $threadId the thread we want to check permissions on
+     * @param int $userId the user of whom we want to check access
+     * @return boolean is the user registered to the thread
+     */
+    public function isRegistered($threadId, $userId)
+    {
+        $count = $this->find()
+            ->where(['Threads.id' => $threadId])
+            ->matching('Users', function($q) use ($userId){
+                return $q->where(['Users.id' => $userId]);
+            })
+            ->count();
+        return $count > 0;
+    }
+    /**
      * Dynamic finder that find thread Id which has unread messages.
      *
      * @param \Cake\ORM\Query $query the original query to append to

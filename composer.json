@@ -25,7 +25,8 @@
         "cakephp/acl": "dev-master",
         "FriendsOfCake/crud": "~4.0",
         "gintonicweb/admin-theme": "dev-master",
-        "gintonicweb/twbs-theme": "dev-master"
+        "gintonicweb/twbs-theme": "dev-master",
+        "voryx/thruway":"0.3.*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",

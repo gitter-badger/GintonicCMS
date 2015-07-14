@@ -17,6 +17,7 @@ namespace GintonicCMS\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use GintonicCMS\Controller\ControllerTrait;
 
 /**
  * Application Controller
@@ -26,7 +27,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-    use \Crud\Controller\ControllerTrait;
+    use ControllerTrait;
 
     public $layout = 'GintonicCMS.default';
     /**
@@ -50,6 +51,18 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Cookie');
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('GintonicCMS.Websocket', [
+            'actions' => [
+                'Websocket.Index',
+                'Websocket.Add',
+                'Websocket.Edit',
+                'Websocket.View',
+                'Websocket.Delete'
+            ],
+            'websockets' => [
+                'GintonicCMS.Messages'
+            ]
+        ]);
         $this->loadComponent('Crud.Crud', [
             'actions' => [
                 'Crud.Index',

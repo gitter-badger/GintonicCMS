@@ -1,1 +1,1 @@
-define(["require","reactDev","chat/chatbox"],function(e){var t=e("reactDev"),n=e("chat/chatbox");t.render(t.createElement(n,{url:"/threads/get.json",pollInterval:2e3}),document.getElementById("example"))});
+define(["require","reactDev","chat/chatbox"],function(e){var t=e("reactDev"),n=e("chat/chatbox");t.render(t.createElement(n,{sendUrl:"/messages/send.json",getUrl:"/threads/get.json",pollInterval:2e3,id:1}),document.getElementById("example"))});

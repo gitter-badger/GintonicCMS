@@ -41,7 +41,6 @@ class ThreadsController extends AppController
      */
     public function get()
     {
-        $this->request->data['id'] = [1];
         $threads = $this->Threads->find('conversation', $this->request->data);
         $this->set(compact('threads'));
         $this->set('_serialize', ['threads']);
