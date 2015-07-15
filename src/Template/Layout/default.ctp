@@ -39,7 +39,10 @@
         </footer>
         <?= $this->Require->req('jquery');?>
         <?= $this->Require->req('bootstrap');?>
-        <?//= $this->Require->load(); ?>
+        <!--
+        <?= $this->Require->load(); ?>
+        -->
+
 <script src="gintonic_c_m_s/autobahn.min.jgz"></script>
 <script>
 var connection = new autobahn.Connection({url: 'ws://127.0.0.1:9090', realm: 'realm1'});
@@ -52,7 +55,7 @@ connection.onopen = function (session) {
    function onevent(args) {
       console.log("Event:", args[0]);
    }
-   session.subscribe('com.myapp.hello', onevent);
+   session.subscribe('gintoniccms.messages.index', onevent);
 
    // 2) publish an event
    session.publish('com.myapp.hello', ['Hello, world!']);
@@ -71,7 +74,7 @@ connection.onopen = function (session) {
    );
 };
 
-connection.open();
+//connection.open();
 </script>
 
     </body>

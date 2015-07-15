@@ -4,49 +4,23 @@ namespace GintonicCMS\Websocket;
 
 use Cake\Contoller\Controller;
 use Cake\Core\App;
-use Cake\Core\ClassLoader;
-use Cake\Core\InstanceConfigTrait;
-use Cake\Event\EventListenerInterface;
 use Thruway\Peer\Client;
+use Thruway\Logging\Logger;
+use Thruway\Transport\PawlTransportProvider;
 
-class Websocket extends Client implements EventListenerInterface
+class Websocket extends Client
 {
-
-    use InstanceConfigTrait;
-
     public $name = null;
-    protected $_controller;
-    protected $_defaultConfig = [];
-    private $_actions = [];
+    public $timeout = 5;
 
-    public function __construct($Controller, $config = [])
+    public $publish = [];
+
+    public function __construct($Controller = null, $config = [])
     {
-        $this->_loadName();
-        $this->_loadController($Controller);
-        $this->_mapActions();
-        $this->config($config);
         parent::__construct('realm1');
-    }
-
-    /**
-     * List of implemented events
-     *
-     * @return array
-     */
-    public function implementedEvents()
-    {
-        return [];
-    }
-
-    /**
-     * Convenient method for Request::is
-     *
-     * @param string|array $method Method(s) to check for
-     * @return bool
-     */
-    protected function _checkRequestType($method)
-    {
-        return $this->_request()->is($method);
+        $this->_loadName();
+        $this->_controller = $Controller;
+        $this->addTransportProvider(new PawlTransportProvider("ws://127.0.0.1:9090/"));
     }
 
     protected function _loadName()
@@ -55,37 +29,41 @@ class Websocket extends Client implements EventListenerInterface
         $this->name = substr($name, 0, -9);
     }
 
-    protected function _loadController($Controller = null)
+    protected function _loadController($session)
     {
-        if ($Controller === null) {
-            $class = App::className(
-                'GintonicCMS.' . $this->name,
-                'Controller',
-                'Controller'
-            );
-            $this->_controller = new $class; 
-        } else {
-            $this->_controller = $Controller; 
-        }
+        $class = App::className(
+            'GintonicCMS.' . $this->name,
+            'Controller',
+            'Controller'
+        );
+        $controller = new $class; 
+        $actions = $this->_mapActions($controller);
+        $this->_loadWsSubscribes($controller, $session);
+        $this->_loadWsRegisters($controller, $session);
     }
 
-    protected function _mapActions()
+    // This should fetch the config data
+    protected function _mapActions($controller)
     {
-        $className = get_class($this->_controller);
+        $actions = [];
+        $className = get_class($controller);
         $class = new \ReflectionClass($className);
         foreach ($class->getMethods() as $m) {
             // Remove beforeFilter and such
             if ($m->class == $className && $m->name[0] != '_') {
-                $this->_actions[] = $m->name;
+                $actions[] = $m->name;
             }
         }
+        return $actions;
     }
 
     /**
+     * Monitor what happens between users
+     *
      * @param \Thruway\ClientSession $session
      * @param \Thruway\Transport\TransportInterface $transport
      */
-    protected function _loadWsSubscribes($session, $transport)
+    protected function _loadWsSubscribes($controller, $actions, $session)
     {
         foreach ($this->_actions as $action) {
             $session->subscribe(
@@ -96,10 +74,12 @@ class Websocket extends Client implements EventListenerInterface
     }
 
     /**
+     * Allow Front-end to call back-end with a response
+     *
      * @param \Thruway\ClientSession $session
      * @param \Thruway\Transport\TransportInterface $transport
      */
-    protected function _loadWsRegisters($session, $transport)
+    protected function _loadWsRegisters($controller, $actions, $session)
     {
         foreach ($this->_actions as $action) {
             $session->register(
@@ -111,7 +91,19 @@ class Websocket extends Client implements EventListenerInterface
 
     protected function _uri($action)
     {
-        return strtolower($this->name . '.' . $action);
+        return strtolower($this->_controller->modelClass . '.' . $action);
+    }
+
+    public function execute()
+    {
+        $this->start(false);
+        $this->getLoop()->addTimer($this->timeout, [$this, 'kill']);
+        $this->getLoop()->run();
+    }
+
+    public function kill()
+    {
+        $this->getLoop()->stop();
     }
 
     /**
@@ -120,31 +112,58 @@ class Websocket extends Client implements EventListenerInterface
      */
     public function onSessionStart($session, $transport)
     {
-        // 1) subscribe to topics
-        $this->_loadWsSubscribes($session, $transport);
+        //if ($this->_controller == null) {
+        //    $this->_loadController();
+        //}
+        
+        $this->loadPublish();
+    }
 
-        //// 2) publish an event
-        //$session->publish('com.myapp.hello', ['Hello, world from PHP!!!'], [], ["acknowledge" => true])->then(
-        //    function () {
-        //        echo "Publish Acknowledged!\n";
-        //    },
-        //    function ($error) {
-        //        // publish failed
-        //        echo "Publish Error {$error}\n";
-        //    }
-        //);
+    public function addPublish($topicName, array $arguments = [], array $argumentsKw = [])
+    {
+        $this->publish[] = [
+            $topicName,
+            $arguments,
+            $argumentsKw,
+            ["acknowledge" => true]
+        ];
+    }
 
-        //// 3) register a procedure for remoting
-        $this->_loadWsRegisters($session, $transport);
+    public function loadPublish()
+    {
+        foreach ($this->publish as $publish) {
+            $this->session->publish(
+                $publish[0],
+                $publish[1],
+                $publish[2],
+                $publish[3]
+            )->then([$this, 'acknowledge'],[$this, 'acknowledge']);
+        }
+    }
 
-        //// 4) call a remote procedure
-        //$session->call('com.myapp.add2', [2, 3])->then(
-        //    function ($res) {
-        //        echo "Result: {$res}\n";
-        //    },
-        //    function ($error) {
-        //        echo "Call Error: {$error}\n";
-        //    }
-        //);
+    public function publish($args = [])
+    {
+        if (!is_array($args)) {
+            $args = [$args];
+        }
+        $topic = $this->_uri($this->_controller->request->action);
+        $this->addPublish($topic, $args);
+        $this->execute();
+    }
+
+
+    // After a successful call we recieve the data here
+    public function call_result($result = null)
+    {
+        $this->getLoop()->stop();
+    }
+
+    public function acknowledge($error = null)
+    {
+        debug('acknowledgment recieved');
+        if ($error != null) {
+            debug($error);
+        }
+        $this->getLoop()->stop();
     }
 }

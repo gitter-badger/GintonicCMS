@@ -10,6 +10,14 @@ class MessagesController extends AppController
 {
     public $paginate = ['maxLimit' => 5];
 
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('GintonicCMS.Websocket', [
+            'index' => 'publish'
+        ]);
+    }
     /**
      * Called before each action, allows everyone to use the "pages" controller
      * without specific permissions.
@@ -34,6 +42,11 @@ class MessagesController extends AppController
         parent::beforeFilter($event);
     }
 
+    public function index()
+    {
+        $this->render(false);
+        $this->set('_ws', ['carottes']);
+    }
     /**
      * Adds a message to a thread. The request data must define the threadId and
      * the message will be registered to the name of the authenticated user
