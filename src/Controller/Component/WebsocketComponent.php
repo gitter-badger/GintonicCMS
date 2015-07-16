@@ -5,7 +5,7 @@ use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Event\Event;
 use Cake\Network\Response;
-use GintonicCMS\Websocket\Websocket;
+use GintonicCMS\Websocket\Trigger;
 
 /**
  * Websocket component
@@ -30,8 +30,6 @@ class WebsocketComponent extends Component
      */
     protected $_eventManager;
 
-    protected $requestTypes = ['subscribe', 'publish', 'register', 'call'];
-
     /**
      * Components settings.
      *
@@ -48,22 +46,13 @@ class WebsocketComponent extends Component
 
     public function shutdown(Event $event)
     {
-
         $action = $event->subject()->request->action;
-        $requestType = $this->config($action);
-
-        // Action not registered
-        if (!$action){
+        $hooks = $this->config();
+        if (!in_array($action, $hooks)) {
             return;
         }
 
-        // Request type error
-        if (!$requestType || !in_array($requestType, $this->requestTypes)){
-            // TODO: throw error
-            return;
-        }
-
-        $websocket = new Websocket($this->_controller);
-        $websocket->{$requestType}($event->subject()->viewVars['_ws']);
+        $trigger = new Trigger($this->_controller);
+        $trigger->publish($event->subject()->viewVars['_ws']);
     }
 }

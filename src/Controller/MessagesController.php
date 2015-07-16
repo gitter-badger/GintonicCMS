@@ -15,7 +15,7 @@ class MessagesController extends AppController
     {
         parent::initialize();
         $this->loadComponent('GintonicCMS.Websocket', [
-            'index' => 'publish'
+            'index'
         ]);
     }
     /**
