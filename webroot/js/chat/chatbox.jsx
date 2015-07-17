@@ -4,6 +4,7 @@ define(function(require) {
     var Messages = require('chat/messages');
     var Heading = require('chat/heading');
     var Compose = require('chat/compose');
+    var websocket = require('gintonic_c_m_s/js/websocket');
 
     var ChatBox = React.createClass({
 
@@ -17,7 +18,6 @@ define(function(require) {
 
         componentDidMount: function() {
             this.retrieveMessages();
-            //setInterval(this.retrieveMessages, this.props.pollInterval);
         },
 
         handleSubmit: function(message) {
@@ -31,20 +31,14 @@ define(function(require) {
             });
             this.setState({data: this.state.data});
 
-            // send to server
-            $.ajax({
-                url: this.props.sendUrl,
-                method: "POST",
-                dataType: 'json',
-                cache: false,
-                data: {
-                    thread_id: this.props.id,
-                    body: message['body']
-                },
-                error: function(xhr, status, err) {
-                    console.error(this.props.sendUrl, status, err.toString());
-                }.bind(this)
-            });
+            data = {};
+            data['thread_id'] = this.props.id;
+            data['body'] = message['body'];
+            var payload = [
+                this.props.sendUrl,
+                JSON.stringify(data)
+            ];
+            websocket.publish('server', payload);
         },
 
         retrieveMessages: function(){

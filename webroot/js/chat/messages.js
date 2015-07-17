@@ -1,1 +1,37 @@
-define(["require","reactDev"],function(e){var t=e("reactDev"),n=t.createClass({displayName:"Messages",render:function(){console.log(this.props.data);var e=this.props.data.map(function(e){return t.createElement("li",{className:"left clearfix"},t.createElement("span",{className:"chat-img pull-left"},t.createElement("img",{className:"img-circle avatar",src:"/gintonic_c_m_s/img/avatar.jpg"})),t.createElement("div",{className:"chat-body clearfix"},t.createElement("div",{className:"header"},t.createElement("strong",{className:"primary-font"},e.user.email),t.createElement("small",{className:"pull-right text-muted"},t.createElement("span",{className:"glyphicon glyphicon-time"}),"12 mins ago")),t.createElement("p",null,e.body)))});return t.createElement("ul",{className:"chat"},e)}});return n});
+define(function(require) {
+
+    var React = require('reactDev');
+
+    var Messages = React.createClass({displayName: "Messages",
+        render: function() {
+            console.log(this.props.data);
+            var messages = this.props.data.map(function (message){
+                return(
+                    React.createElement("li", {className: "left clearfix"}, 
+                        React.createElement("span", {className: "chat-img pull-left"}, 
+                           React.createElement("img", {className: "img-circle avatar", src: "/gintonic_c_m_s/img/avatar.jpg"})
+                        ), 
+                        React.createElement("div", {className: "chat-body clearfix"}, 
+                            React.createElement("div", {className: "header"}, 
+                                React.createElement("strong", {className: "primary-font"}, message.user.email), 
+                                React.createElement("small", {className: "pull-right text-muted"}, 
+                                    React.createElement("span", {className: "glyphicon glyphicon-time"}), 
+                                    "12 mins ago"
+                                )
+                            ), 
+                            React.createElement("p", null, message.body)
+                        )
+                    )
+                );
+            });
+            return (
+                React.createElement("ul", {className: "chat"}, 
+                    messages
+                )
+            );
+        }
+    });
+
+    return Messages;
+});
+

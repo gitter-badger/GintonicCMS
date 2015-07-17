@@ -158,7 +158,7 @@ module.exports = function(grunt) {
       },
       requirejs: {
         files: ["assets/js/**/*"],
-        tasks: ["scripts"],
+        tasks: ["scripts:dev"],
       },
       less: {
           files: ["assets/less/*"],

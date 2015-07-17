@@ -1,1 +1,22 @@
-define(["require","reactDev"],function(e){var t=e("reactDev"),n=t.createClass({displayName:"Heading",render:function(){return t.createElement("div",{className:"panel-heading"},t.createElement("i",{className:"fa fa-comments"})," Chat",t.createElement("div",{className:"pull-right"},t.createElement("a",{"data-toggle":"collapse","data-parent":"#accordion",href:"#collapseOne"},t.createElement("i",{className:"fa fa-minus"}))))}});return n});
+define(function(require) {
+
+    var React = require('reactDev');
+
+    var Heading = React.createClass({displayName: "Heading",
+        render: function() {
+            return (
+                React.createElement("div", {className: "panel-heading"}, 
+                    React.createElement("i", {className: "fa fa-comments"}), " Chat", 
+                    React.createElement("div", {className: "pull-right"}, 
+                        React.createElement("a", {"data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseOne"}, 
+                            React.createElement("i", {className: "fa fa-minus"})
+                        )
+                    )
+                )
+            );
+        }
+    });
+
+    return Heading;
+});
+

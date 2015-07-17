@@ -1,1 +1,16 @@
-define(["require","reactDev","chat/chatbox"],function(e){var t=e("reactDev"),n=e("chat/chatbox");t.render(t.createElement(n,{sendUrl:"/messages/send.json",getUrl:"/threads/get.json",pollInterval:2e3,id:1}),document.getElementById("example"))});
+define(function(require) {
+
+    var React = require('reactDev');
+    var ChatBox = require('chat/chatbox');
+
+    React.render(
+        React.createElement(ChatBox, {
+            sendUrl: "/messages/send.json", 
+            getUrl: "/threads/get.json", 
+            pollInterval: 2000, 
+            id: 1}),
+        document.getElementById('example')
+    );
+
+});
+

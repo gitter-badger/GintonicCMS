@@ -3,6 +3,7 @@ requirejs.config({
 
     ],
     paths: {
+        autobahn: "../vendor/autobahn/autobahn",
         chat: "gintonic_c_m_s/js/chat",
         react: "../vendor/react/react-with-addons.min",
         reactDev: "../vendor/react/react-with-addons",

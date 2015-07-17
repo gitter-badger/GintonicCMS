@@ -39,44 +39,10 @@
         </footer>
         <?= $this->Require->req('jquery');?>
         <?= $this->Require->req('bootstrap');?>
-        <!--
+        <?= $this->Require->req('gintonic_c_m_s/js/websocket');?>
+        <?= $this->Require->req('gintonic_c_m_s/js/a');?>
+        <?= $this->Require->req('gintonic_c_m_s/js/b');?>
         <?= $this->Require->load(); ?>
-        -->
-
-<script src="gintonic_c_m_s/autobahn.min.jgz"></script>
-<script>
-var connection = new autobahn.Connection({url: 'ws://127.0.0.1:9090', realm: 'realm1'});
-
-console.log(connection);
-
-connection.onopen = function (session) {
-
-   // 1) subscribe to a topic
-   function onevent(args) {
-      console.log("Event:", args[0]);
-   }
-   session.subscribe('gintoniccms.messages.index', onevent);
-
-   // 2) publish an event
-   session.publish('com.myapp.hello', ['Hello, world!']);
-
-   // 3) register a procedure for remoting
-   function add2(args) {
-      return args[0] + args[1];
-   }
-   session.register('com.myapp.add2', add2);
-
-   // 4) call a remote procedure
-   session.call('com.myapp.add2', [2, 3]).then(
-      function (res) {
-         console.log("Result:", res);
-      }
-   );
-};
-
-//connection.open();
-</script>
-
     </body>
 </html>
 
