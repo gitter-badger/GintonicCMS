@@ -3,19 +3,19 @@ define(function(require) {
     var React = require('reactDev');
 
     var Compose = React.createClass({
-        handleSubmit: function(e){
+        submit: function(e){
             e.preventDefault();
             var body = React.findDOMNode(this.refs.body).value.trim();
             if (!body) {
                 return;
             }
-            this.props.handleSubmit({body: body});
+            this.props.submit({body: body});
             React.findDOMNode(this.refs.body).value = '';
         },
         render: function() {
             return (
                 <div className="panel-footer">
-                    <form className="chatComposeForm" onSubmit={this.handleSubmit}>
+                    <form className="chatComposeForm" onSubmit={this.submit}>
                         <div className="input-group">
                             <input id="btn-input" type="text" className="form-control input-sm" ref="body" placeholder="Type your message here..." />
                             <span className="input-group-btn">

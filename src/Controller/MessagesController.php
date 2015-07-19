@@ -46,6 +46,7 @@ class MessagesController extends AppController
     {
         $this->render(false);
         $this->set('_ws', ['carottes']);
+        debug($this->request->data);
     }
     /**
      * Adds a message to a thread. The request data must define the threadId and

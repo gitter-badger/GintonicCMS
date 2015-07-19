@@ -9,7 +9,6 @@ define(function(require) {
         }
 
         this.connection = new autobahn.Connection({url: 'ws://127.0.0.1:9090', realm: 'realm1'});
-        this.objects = [];
         this.subscribes = [];
         this.session = null;
 

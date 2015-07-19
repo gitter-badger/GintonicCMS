@@ -4,59 +4,41 @@ define(function(require) {
     var Messages = require('chat/messages');
     var Heading = require('chat/heading');
     var Compose = require('chat/compose');
-    var websocket = require('gintonic_c_m_s/js/websocket');
+    var WebsocketMixin = require('gintonic_c_m_s/js/websocket/mixin');
 
     var ChatBox = React.createClass({displayName: "ChatBox",
+
+        mixins: [WebsocketMixin],
+
+        retrieveUrl: "/threads/get.json",
+        submitUrl:  "/messages/index.json",
+        recieveUri: "messages.index",
 
         getInitialState: function() {
             return {
                 data: {
-                    messages: []
+                    messages: [],
                 }
             };
         },
 
-        componentDidMount: function() {
-            this.retrieveMessages();
-        },
-
-        handleSubmit: function(message) {
-
-            // update chatbox
+        submit: function(data){
+            console.log(data);
             this.state.data.messages.push({
-                body:message['body'],
+                body:data['body'],
                 user:{
                     email: 'test@blackhole.io'
                 }
             });
             this.setState({data: this.state.data});
-
-            data = {};
-            data['thread_id'] = this.props.id;
-            data['body'] = message['body'];
-            var payload = [
-                this.props.sendUrl,
-                JSON.stringify(data)
-            ];
-            websocket.publish('server', payload);
         },
 
-        retrieveMessages: function(){
-            $.ajax({
-                url: this.props.getUrl,
-                method: "POST",
-                dataType: 'json',
-                cache: false,
-                data: {
-                    id: [this.props.id]
-                },
-                success: function(data) {
-                    this.setState({data: data['threads'][0]});
-                }.bind(this),
-                    error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
+        retrieve: function(data){
+            this.setState({data: data['threads'][0]});
+        },
+
+        recieve: function(data){
+            this.setState({data: data['threads'][0]});
         },
 
         render: function() {
@@ -67,7 +49,7 @@ define(function(require) {
                         React.createElement("div", {className: "panel-body"}, 
                             React.createElement(Messages, {data: this.state.data.messages})
                         ), 
-                        React.createElement(Compose, {handleSubmit: this.handleSubmit})
+                        React.createElement(Compose, {submit: this.baseSubmit})
                     )
                 )
             );

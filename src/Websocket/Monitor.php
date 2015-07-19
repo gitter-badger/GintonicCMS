@@ -21,9 +21,8 @@ class Monitor extends Client
 
     public $topic = 'server';
 
-    public function dispatch($url = '/', $data = [])
+    public function dispatch($url = '/', $id, $data = [])
     {
-        echo var_dump($data);
         $base = '';
         $webroot = '/';
         $sessionConfig = (array)Configure::read('Session') + [
@@ -41,22 +40,24 @@ class Monitor extends Client
             'webroot' => $webroot,
             'session' => Session::create($sessionConfig)
         ];
-        $config['url'] = $url . '.json';
+        $config['url'] = $url;
 
         $request = new Request($config);
+        $request->data = $data;
 
-        //$dispatcher = DispatcherFactory::create();
-        //$dispatcher->dispatch(
-        //    $request,
-        //    new Response()
-        //);
+        $dispatcher = DispatcherFactory::create();
+        $dispatcher->dispatch(
+            $request,
+            new Response()
+        );
     }
 
     public function parse($args)
     {
         $url = $args[0];
-        $data = json_decode($args[1]);
-        $this->dispatch($url, $data);
+        $id = $args[1];
+        $data = json_decode($args[2]);
+        $this->dispatch($url, $id, $data);
     }
 
     /**

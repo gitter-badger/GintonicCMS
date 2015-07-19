@@ -4,7 +4,6 @@ define(function(require) {
 
     var Messages = React.createClass({displayName: "Messages",
         render: function() {
-            console.log(this.props.data);
             var messages = this.props.data.map(function (message){
                 return(
                     React.createElement("li", {className: "left clearfix"}, 

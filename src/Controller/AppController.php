@@ -122,6 +122,7 @@ class AppController extends Controller
      */
     public function beforeFilter(Event $event)
     {
+        $this->Auth->allow();
         if ($this->request->params['controller'] == 'Pages') {
             $this->Auth->allow();
         }
