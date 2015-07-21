@@ -11,8 +11,8 @@ define(function(require) {
         mixins: [WebsocketMixin],
 
         retrieveUrl: "/threads/get.json",
-        submitUrl:  "/messages/index.json",
-        recieveUri: "messages.index",
+        submitUrl:  "/messages/send.json",
+        recieveUri: "messages.send",
 
         getInitialState: function() {
             return {
@@ -23,14 +23,18 @@ define(function(require) {
         },
 
         submit: function(data){
-            console.log(data);
-            this.state.data.messages.push({
-                body:data['body'],
-                user:{
-                    email: 'test@blackhole.io'
-                }
-            });
-            this.setState({data: this.state.data});
+            //console.log(data);
+            //this.state.data.messages.push({
+            //    body:data['body'],
+            //    user:{
+            //        email: 'test@blackhole.io'
+            //    }
+            //});
+            //this.setState({data: this.state.data});
+
+            data['thread_id'] = 1;
+            data['user_id'] = 4;
+            this.websocketSubmit(data);
         },
 
         retrieve: function(data){
@@ -38,6 +42,8 @@ define(function(require) {
         },
 
         recieve: function(data){
+            console.log('recieved data');
+            console.log(data);
             this.setState({data: data['threads'][0]});
         },
 
@@ -49,7 +55,7 @@ define(function(require) {
                         React.createElement("div", {className: "panel-body"}, 
                             React.createElement(Messages, {data: this.state.data.messages})
                         ), 
-                        React.createElement(Compose, {submit: this.baseSubmit})
+                        React.createElement(Compose, {submit: this.submit})
                     )
                 )
             );

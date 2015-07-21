@@ -30,9 +30,7 @@ define(function(require) {
             });
         }, 
 
-        baseSubmit: function(data) {
-
-            this.submit(data);
+        websocketSubmit: function(data) {
 
             var payload = [
                 this.submitUrl,

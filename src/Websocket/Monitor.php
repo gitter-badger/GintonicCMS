@@ -32,10 +32,10 @@ class Monitor extends Client
 
         $config = [
             'query' => $_GET,
-            'post' => $_POST,
+            'post' => $data,
             'files' => $_FILES,
             'cookies' => $_COOKIE,
-            'environment' => $_SERVER + $_ENV,
+            'environment' => ['REQUEST_METHOD' => 'POST'],
             'base' => $base,
             'webroot' => $webroot,
             'session' => Session::create($sessionConfig)
@@ -43,7 +43,7 @@ class Monitor extends Client
         $config['url'] = $url;
 
         $request = new Request($config);
-        $request->data = $data;
+        $request->addDetector('post', ['env' => 'REQUEST_METHOD', 'value' => 'POST']);
 
         $dispatcher = DispatcherFactory::create();
         $dispatcher->dispatch(
@@ -56,7 +56,7 @@ class Monitor extends Client
     {
         $url = $args[0];
         $id = $args[1];
-        $data = json_decode($args[2]);
+        $data = json_decode($args[2], true);
         $this->dispatch($url, $id, $data);
     }
 

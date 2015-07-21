@@ -15,7 +15,7 @@ class MessagesController extends AppController
     {
         parent::initialize();
         $this->loadComponent('GintonicCMS.Websocket', [
-            'index'
+            'send'
         ]);
     }
     /**
@@ -33,12 +33,12 @@ class MessagesController extends AppController
         // Validate that the given user has access to requested thread
         $threadAccessActions = ['send'];
         $threadAccess = in_array($this->request->params['action'], $threadAccessActions);
-        if ($threadAccess) {
-            $threadId = $this->request->data['thread_id'];
-            if ($this->Messages->Threads->isRegistered($threadId, $user['id'])) {
+        //if ($threadAccess) {
+        //    $threadId = $this->request->data['thread_id'];
+        //    if ($this->Messages->Threads->isRegistered($threadId, $user['id'])) {
                 $this->Auth->allow();
-            }
-        }
+        //    }
+        //}
         parent::beforeFilter($event);
     }
 
@@ -56,15 +56,16 @@ class MessagesController extends AppController
     {
         $success = false;
         if ($this->request->is(['post', 'put'])) {
-            $user = $this->Auth->user();
-            $this->request->data['user_id'] = $user['id'];
+            //$user = $this->Auth->user();
+            //$this->request->data['user_id'] = $user['id'];
             $message = $this->Messages->newEntity(
                 $this->request->data
             );
-            $success = true;//$this->Messages->save($message);
+            $success = $this->Messages->save($message);
         }
         $this->set(compact('success'));
         $this->set('_serialize', ['success']);
+        $this->set('_ws', ['test']);
 
         //$this->autoRender = false;
         //$threadUsers = $this->Messages->Threads->find('participants', [
