@@ -43,5 +43,9 @@
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
             "GintonicCMS\\Test\\": "tests"
         }
-    }
+    },
+    "bin": [
+        "bin/monitor.php",
+        "bin/server.php"
+    ]
 }
