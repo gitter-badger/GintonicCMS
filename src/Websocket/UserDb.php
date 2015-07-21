@@ -1,6 +1,8 @@
 <?php
 
+namespace GintonicCMS\Websocket;
 
+use Cake\Controller\Controller;
 /**
  * Class UserDb
  */
@@ -13,11 +15,17 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
     private $users;
 
     /**
+     * @var Controller
+     */
+    private $controller;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->users = [];
+        $this->controller = new Controller();
     }
 
     /**
@@ -29,6 +37,8 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
      */
     function add($userName, $password, $salt = null)
     {
+        $this->controller->loadModel('Users');
+        echo var_dump($this->controller);exit;
         if ($salt !== null) {
             $key = \Thruway\Common\Utils::getDerivedKey($password, $salt);
         } else {

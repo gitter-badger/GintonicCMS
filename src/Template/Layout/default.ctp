@@ -40,8 +40,6 @@
         <?= $this->Require->req('jquery');?>
         <?= $this->Require->req('bootstrap');?>
         <?= $this->Require->req('gintonic_c_m_s/js/websocket');?>
-        <?= $this->Require->req('gintonic_c_m_s/js/a');?>
-        <?= $this->Require->req('gintonic_c_m_s/js/b');?>
         <?= $this->Require->load(); ?>
     </body>
 </html>
