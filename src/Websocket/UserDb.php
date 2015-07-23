@@ -40,5 +40,4 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
         }
         return false;
     }
-
 } 

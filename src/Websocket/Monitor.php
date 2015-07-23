@@ -10,7 +10,6 @@ use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\Routing\DispatcherFactory;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
-
 use Thruway\Authentication\ClientWampCraAuthenticator;
 
 // Request
@@ -26,9 +25,9 @@ class Monitor extends Client
 
     public function __construct()
     {
+        parent::__construct();
         $this->setAuthId('server');
         $this->addClientAuthenticator(new ClientWampCraAuthenticator('server','server'));
-        parent::__construct();
     }
 
     public function dispatch($url = '/', $id, $data = [])

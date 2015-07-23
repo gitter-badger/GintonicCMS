@@ -8,6 +8,7 @@ use GintonicCMS\Websocket\SessionManager;
 use Thruway\Authentication\WampCraAuthProvider;
 use Thruway\Peer\Router;
 use Thruway\Transport\RatchetTransportProvider;
+use Thruway\Authentication\AuthenticationManager;
 
 $router = new Router();
 
@@ -15,7 +16,7 @@ $router = new Router();
 // setup some users to auth against
 $userDb = new UserDb();
 
-$authMgr = new \Thruway\Authentication\AuthenticationManager();
+$authMgr = new AuthenticationManager();
 $router->setAuthenticationManager($authMgr);
 $router->addInternalClient($authMgr);
 
