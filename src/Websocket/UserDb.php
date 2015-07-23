@@ -29,14 +29,14 @@ class UserDb implements WampCraUserDbInterface
      * Get user by id
      *
      * @param string $authId Username
-     * @return boolean
+     * @return bool
      */
     public function get($id)
     {
         if ($id == 'server') {
             return [
                 "authid" => 'server',
-                "key" => 'server' ,
+                "key" => 'server',
                 "salt" => null
             ];
         }

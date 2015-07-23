@@ -19,13 +19,13 @@ class Trigger extends Client
     {
         $this->_controller = $controller;
         $this->setAuthId('server');
-        $this->addClientAuthenticator(new ClientWampCraAuthenticator('server','server'));
+        $this->addClientAuthenticator(new ClientWampCraAuthenticator('server', 'server'));
         parent::__construct();
     }
 
     /**
-     * @param \Thruway\ClientSession $session
-     * @param \Thruway\Transport\TransportInterface $transport
+     * @param \Thruway\ClientSession $session ClientSession
+     * @param \Thruway\Transport\TransportInterface $transport Transport
      */
     public function onSessionStart($session, $transport)
     {
@@ -35,7 +35,7 @@ class Trigger extends Client
                 $this->_call[1],
                 $this->_call[2],
                 $this->_call[3]
-            )->then([$this, 'success'],[$this, 'error']);
+            )->then([$this, 'success'], [$this, 'error']);
             return
         }
 
@@ -55,10 +55,9 @@ class Trigger extends Client
                     $this->_call[1],
                     $this->_call[2],
                     array_merge($this->_call[3], ['eligible' => $res[0]])
-                )->then([$this, 'success'],[$this, 'error']);
+                )->then([$this, 'success'], [$this, 'error']);
             }
         );
-
     }
 
     /**
@@ -66,7 +65,7 @@ class Trigger extends Client
      */
     public function publish($args = [], $users = null)
     {
-        $argsKw = [], 
+        $argsKw = [];
         $topic = $this->_uri($this->_controller->name, $this->_controller->request->action);
         if (!is_array($args)) {
             $args = [$args];

@@ -55,15 +55,14 @@ class WebsocketComponent extends Component
      * Callback fired before the output is sent to the browser and launches the
      * event on websockets if need be.
      *
-     * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection 
+     * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection
      * this component can use to lazy load its components.
-     * @param array $config Array of configuration settings.
      */
     public function shutdown(Event $event)
     {
         $action = $event->subject()->request->action;
 
-        if (!isset($event->subject()->viewVars['_ws']) {
+        if (!isset($event->subject()->viewVars['_ws'])) {
             return;
         }
 

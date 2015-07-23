@@ -2,13 +2,14 @@
 
 namespace GintonicCMS\Websocket;
 
+use Cake\Contoller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Contoller\Controller;
 use Cake\Event\EventManagerTrait;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Network\Session;
+use Cake\Contoller\Controller;
 use Cake\Routing\Router;
 use Cake\Routing\DispatcherFactory;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
@@ -30,13 +31,13 @@ class Monitor extends Client
     {
         parent::__construct();
         $this->setAuthId('server');
-        $this->addClientAuthenticator(new ClientWampCraAuthenticator('server','server'));
+        $this->addClientAuthenticator(new ClientWampCraAuthenticator('server', 'server'));
     }
 
     /**
      * TODO doc block
      */
-    public function dispatch($url = '/', $id, $data = [])
+    public function dispatch($url = '/', $id = null, $data = [])
     {
         $base = '';
         $webroot = '/';
@@ -79,12 +80,11 @@ class Monitor extends Client
     }
 
     /**
-     * @param \Thruway\ClientSession $session
-     * @param \Thruway\Transport\TransportInterface $transport
+     * @param \Thruway\ClientSession $session the user session
+     * @param \Thruway\Transport\TransportInterface $transport the transport
      */
     public function onSessionStart($session, $transport)
     {
         $session->subscribe($this->topic, [$this, 'parse']);
     }
-
 }

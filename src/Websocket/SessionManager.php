@@ -9,8 +9,8 @@ class SessionManager extends Client
     public $sessions = [];
 
     /**
-     * @param \Thruway\ClientSession $session
-     * @param \Thruway\Transport\TransportInterface $transport
+     * @param \Thruway\ClientSession $session ClientSession
+     * @param \Thruway\Transport\TransportInterface $transport Transport
      */
     public function onSessionStart($session, $transport)
     {
@@ -37,12 +37,12 @@ class SessionManager extends Client
     public function onLeave($args)
     {
         //remove the session
-        if (!isset($this->sessions[$args[0]->authid])){
+        if (!isset($this->sessions[$args[0]->authid])) {
             return;
         }
 
-        foreach ( $this->sessions[$args[0]->authid] as $k => $session) {
-            if ($session === $args[0]->session){
+        foreach ($this->sessions[$args[0]->authid] as $k => $session) {
+            if ($session === $args[0]->session) {
                 unset($this->sessions[$args[0]->authid][$k]);
             }
         }

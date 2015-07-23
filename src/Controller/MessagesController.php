@@ -11,6 +11,9 @@ class MessagesController extends AppController
     public $paginate = ['maxLimit' => 5];
 
 
+    /**
+     * TODO doc block
+     */
     public function initialize()
     {
         parent::initialize();
@@ -75,45 +78,36 @@ class MessagesController extends AppController
         //}
     }
 
-    ///**
-    // * TODO: Write Document. this method only mark as read.
-    // */
     //public function read()
     //{
     //    $this->autoRender = false;
     //    $status['status'] = 'fail';
     //    $userId = $this->request->Session()->read('Auth.User.id');
-    //    
+    //
     //    if ($this->Messages->markAsRead($this->request->data['messageIds'], $userId)) {
     //        $status['status'] = 'ok';
     //    }
     //    echo json_encode($status);
     //}
 
-    ///**
-    // * TODO: Write Document. this method only mark as read.
-    // */
     //public function delete()
     //{
     //    $this->autoRender = false;
     //    $status['status'] = 'fail';
     //    $userId = $this->request->Session()->read('Auth.User.id');
-    //    
+    //
     //    if ($this->Messages->markAsDelete($this->request->data['messageIds'], $userId)) {
     //        $status['status'] = 'ok';
     //    }
     //    echo json_encode($status);
     //}
 
-    ///**
-    // * TODO: Write Document. this method only mark as read.
-    // */
     //public function unread()
     //{
     //    $this->autoRender = false;
     //    $status['status'] = 'fail';
     //    $userId = $this->request->Session()->read('Auth.User.id');
-    //    
+    //
     //    if ($this->Messages->markAsUnread($this->request->data['messageIds'], $userId)) {
     //        $status['status'] = 'ok';
     //    }
