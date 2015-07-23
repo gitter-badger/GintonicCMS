@@ -3,13 +3,8 @@ define(function(require) {
     var autobahn = require('autobahn');
     var instance = null;
 
-    if (false) {
-        var user = "peter";
-        var key = "secret1";
-    } else {
-        var user = "joe";
-        var key = "secret2";
-    }
+    var user = "1";
+    var key = "phil.laf@gmail.com";
 
     function Websocket() {
 
@@ -19,6 +14,7 @@ define(function(require) {
 
         this.subscribes = [];
         this.session = null;
+        that = this;
 
         var connection = new autobahn.Connection({
             url: 'ws://127.0.0.1:9090/ws',

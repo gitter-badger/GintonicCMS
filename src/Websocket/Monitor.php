@@ -11,15 +11,25 @@ use Cake\Routing\Router;
 use Cake\Routing\DispatcherFactory;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
 
+use Thruway\Authentication\ClientWampCraAuthenticator;
+
 // Request
 use Cake\Core\Configure;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Session;
+
 class Monitor extends Client
 {
     use EventManagerTrait;
 
     public $topic = 'server';
+
+    public function __construct()
+    {
+        $this->setAuthId('server');
+        $this->addClientAuthenticator(new ClientWampCraAuthenticator('server','server'));
+        parent::__construct();
+    }
 
     public function dispatch($url = '/', $id, $data = [])
     {
@@ -68,4 +78,5 @@ class Monitor extends Client
     {
         $session->subscribe($this->topic, [$this, 'parse']);
     }
+
 }

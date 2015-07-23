@@ -10,11 +10,6 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
 {
 
     /**
-     * @var array
-     */
-    private $users;
-
-    /**
      * @var Controller
      */
     private $controller;
@@ -24,43 +19,26 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
      */
     public function __construct()
     {
-        $this->users = [];
         $this->controller = new Controller();
-    }
-
-    /**
-     * Add new user
-     * 
-     * @param string $userName
-     * @param string $password
-     * @param string $salt
-     */
-    function add($userName, $password, $salt = null)
-    {
         $this->controller->loadModel('Users');
-        echo var_dump($this->controller);exit;
-        if ($salt !== null) {
-            $key = \Thruway\Common\Utils::getDerivedKey($password, $salt);
-        } else {
-            $key = $password;
-        }
-
-        $this->users[$userName] = ["authid" => $userName, "key" => $key, "salt" => $salt];
     }
 
     /**
-     * Get user by username
+     * Get user by id
      * 
      * @param string $authId Username
      * @return boolean
      */
-    function get($authId)
+    function get($id)
     {
-        if (isset($this->users[$authId])) {
-            return $this->users[$authId];
-        } else {
-            return false;
+        if($id == 'server'){
+            return ["authid" => 'server', "key" => 'server' , "salt" => null];
         }
+        $user = $this->controller->Users->findById($id)->first();
+        if ($user) {
+            return ["authid" => $user->id, "key" => $user->email, "salt" => null];
+        }
+        return false;
     }
 
 } 
