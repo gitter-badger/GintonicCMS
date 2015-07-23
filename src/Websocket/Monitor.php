@@ -9,9 +9,8 @@ use Cake\Event\EventManagerTrait;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Network\Session;
-use Cake\Contoller\Controller;
-use Cake\Routing\Router;
 use Cake\Routing\DispatcherFactory;
+use Cake\Routing\Router;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
 use Thruway\Authentication\ClientWampCraAuthenticator;
 
