@@ -127,7 +127,7 @@ class ThreadsTable extends Table
     {
         $count = $this->find()
             ->where(['Threads.id' => $threadId])
-            ->matching('Users', function($q) use ($userId) {
+            ->matching('Users', function ($q) use ($userId) {
                 return $q->where(['Users.id' => $userId]);
             })
             ->count();
