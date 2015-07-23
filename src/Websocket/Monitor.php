@@ -2,27 +2,30 @@
 
 namespace GintonicCMS\Websocket;
 
-use Cake\Contoller\Controller;
 use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Contoller\Controller;
 use Cake\Event\EventManagerTrait;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\Network\Session;
 use Cake\Routing\Router;
 use Cake\Routing\DispatcherFactory;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
 use Thruway\Authentication\ClientWampCraAuthenticator;
 
-// Request
-use Cake\Core\Configure;
-use Cake\Network\Exception\MethodNotAllowedException;
-use Cake\Network\Session;
-
 class Monitor extends Client
 {
     use EventManagerTrait;
 
+    /**
+     * TODO doc block
+     */
     public $topic = 'server';
 
+    /**
+     * TODO doc block
+     */
     public function __construct()
     {
         parent::__construct();
@@ -30,6 +33,9 @@ class Monitor extends Client
         $this->addClientAuthenticator(new ClientWampCraAuthenticator('server','server'));
     }
 
+    /**
+     * TODO doc block
+     */
     public function dispatch($url = '/', $id, $data = [])
     {
         $base = '';
@@ -61,6 +67,9 @@ class Monitor extends Client
         );
     }
 
+    /**
+     * TODO doc block
+     */
     public function parse($args)
     {
         $url = $args[0];

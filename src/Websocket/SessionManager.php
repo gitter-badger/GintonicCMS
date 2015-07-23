@@ -7,6 +7,7 @@ use Thruway\Peer\Client;
 class SessionManager extends Client
 {
     public $sessions = [];
+
     /**
      * @param \Thruway\ClientSession $session
      * @param \Thruway\Transport\TransportInterface $transport
@@ -18,7 +19,11 @@ class SessionManager extends Client
         $session->register('server.get_user_sessions', [$this, 'getUserSession']);
     }
 
-    public function onJoin($args){
+    /**
+     * TODO doc block
+     */
+    public function onJoin($args)
+    {
         echo var_dump($this->sessions);
         echo var_dump($args[0]->session);
         //echo var_dump($this->sessions[$args[0]->authid]);
@@ -26,7 +31,11 @@ class SessionManager extends Client
         echo var_dump($this->sessions);
     }
 
-    public function onLeave($args){
+    /**
+     * TODO doc block
+     */
+    public function onLeave($args)
+    {
         //remove the session
         if (!isset($this->sessions[$args[0]->authid])){
             return;
@@ -40,7 +49,11 @@ class SessionManager extends Client
         //$this->sessions[$args[0]->authid] = $args[0]->session;
     }
 
-    public function getUserSession($args){
+    /**
+     * TODO doc block
+     */
+    public function getUserSession($args)
+    {
         return $this->sessions[$args[0]->authid];
     }
 }

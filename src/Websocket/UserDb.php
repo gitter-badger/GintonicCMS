@@ -3,10 +3,12 @@
 namespace GintonicCMS\Websocket;
 
 use Cake\Controller\Controller;
+use Thruway\Authentication\WampCraUserDbInterface;
+
 /**
  * Class UserDb
  */
-class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
+class UserDb implements WampCraUserDbInterface
 {
 
     /**
@@ -25,19 +27,29 @@ class UserDb implements \Thruway\Authentication\WampCraUserDbInterface
 
     /**
      * Get user by id
-     * 
+     *
      * @param string $authId Username
      * @return boolean
      */
-    function get($id)
+    public function get($id)
     {
-        if($id == 'server'){
-            return ["authid" => 'server', "key" => 'server' , "salt" => null];
+        if ($id == 'server') {
+            return [
+                "authid" => 'server',
+                "key" => 'server' ,
+                "salt" => null
+            ];
         }
+
         $user = $this->controller->Users->findById($id)->first();
         if ($user) {
-            return ["authid" => $user->id, "key" => $user->email, "salt" => null];
+            return [
+                "authid" => $user->id,
+                "key" => $user->email,
+                "salt" => null
+            ];
         }
+
         return false;
     }
-} 
+}

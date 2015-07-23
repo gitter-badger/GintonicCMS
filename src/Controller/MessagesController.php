@@ -14,9 +14,7 @@ class MessagesController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('GintonicCMS.Websocket', [
-            'send'
-        ]);
+        $this->loadComponent('GintonicCMS.Websocket');
     }
     /**
      * Called before each action, allows everyone to use the "pages" controller
@@ -42,32 +40,29 @@ class MessagesController extends AppController
         parent::beforeFilter($event);
     }
 
-    public function index()
-    {
-        $this->render(false);
-        $this->set('_ws', ['carottes']);
-        debug($this->request->data);
-    }
     /**
      * Adds a message to a thread. The request data must define the threadId and
      * the message will be registered to the name of the authenticated user
      */
     public function send()
     {
-        $success = false;
+        $this->autoRender = false;
+
         if ($this->request->is(['post', 'put'])) {
             //$user = $this->Auth->user();
             //$this->request->data['user_id'] = $user['id'];
             $message = $this->Messages->newEntity(
                 $this->request->data
             );
-            $success = $this->Messages->save($message);
+            $this->Messages->save($message);
+            if ($this->Messages->save($message)) {
+                $this->set('_ws', [
+                    'users' => $this->,
+                    'data' => $this->messages->find()->all();
+                ]);
+            }
         }
-        $this->set(compact('success'));
-        $this->set('_serialize', ['success']);
-        $this->set('_ws', ['test']);
 
-        //$this->autoRender = false;
         //$threadUsers = $this->Messages->Threads->find('participants', [
         //    'threadId' => $this->request->data['thread_id']
         //]);

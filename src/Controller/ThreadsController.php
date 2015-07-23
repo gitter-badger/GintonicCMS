@@ -26,17 +26,10 @@ use GintonicCMS\Controller\AppController;
  */
 class ThreadsController extends AppController
 {
-    public function index()
-    {
-        $threads = $this->Threads->find()->all();
-        $this->set(compact('threads'));
-        $this->set('_serialize', ['threads']);
-    }
-
     /**
      * Returns the latest messages and users in a
      * thread based on the id given in input
-     * 
+     *
      * Example : $this->request->data['id'] = [1, 2]
      */
     public function get()

@@ -6,25 +6,34 @@ use Cake\Contoller\Controller;
 use Cake\Core\App;
 use Cake\Network\Request;
 use GintonicCMS\Websocket\Procedure\PublishProcedure;
-use Thruway\Peer\Client as ThruwayClient;
 use Thruway\Logging\Logger;
+use Thruway\Peer\Client as ThruwayClient;
 use Thruway\Transport\PawlTransportProvider;
 
 class Client extends ThruwayClient
 {
     public $timeout = 5;
 
+    /**
+     * TODO doc block
+     */
     public function __construct()
     {
         parent::__construct('realm1');
         $this->addTransportProvider(new PawlTransportProvider("ws://127.0.0.1:9090/"));
     }
 
+    /**
+     * TODO doc block
+     */
     protected function _uri($controller, $action)
     {
         return strtolower($controller . '.' . $action);
     }
 
+    /**
+     * TODO doc block
+     */
     public function execute()
     {
         $this->start(false);
@@ -32,6 +41,9 @@ class Client extends ThruwayClient
         $this->getLoop()->run();
     }
 
+    /**
+     * TODO doc block
+     */
     public function kill()
     {
         debug('killed');

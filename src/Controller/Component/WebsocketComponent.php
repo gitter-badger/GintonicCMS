@@ -11,7 +11,7 @@ use GintonicCMS\Websocket\Trigger;
  * Websocket component
  *
  * Hook controller actions to a Websockets front-end
- * implementing (WAMP) 
+ * implementing (WAMP)
  */
 class WebsocketComponent extends Component
 {
@@ -37,6 +37,13 @@ class WebsocketComponent extends Component
      */
     protected $_defaultConfig = [];
 
+    /**
+     * Constructor
+     *
+     * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection this component
+     *   can use to lazy load its components.
+     * @param array $config Array of configuration settings.
+     */
     public function __construct(ComponentRegistry $collection, $config = [])
     {
         $this->_controller = $collection->getController();
@@ -44,15 +51,27 @@ class WebsocketComponent extends Component
         parent::__construct($collection, $config);
     }
 
+    /**
+     * Callback fired before the output is sent to the browser and launches the
+     * event on websockets if need be.
+     *
+     * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection 
+     * this component can use to lazy load its components.
+     * @param array $config Array of configuration settings.
+     */
     public function shutdown(Event $event)
     {
         $action = $event->subject()->request->action;
-        $hooks = $this->config();
-        if (!in_array($action, $hooks)) {
+
+        if (!isset($event->subject()->viewVars['_ws']) {
             return;
         }
 
+        $_ws = $event->subject()->viewVars['_ws'];
+        $data = (isset($_ws) && isset($_ws['data']) ? $_ws['data'] : null;
+        $users = (isset($_ws) && isset($_ws['users']) ? $_ws['users'] : null;
+
         $trigger = new Trigger($this->_controller);
-        $trigger->publish($event->subject()->viewVars['_ws']);
+        $trigger->publish($data, $users);
     }
 }

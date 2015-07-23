@@ -12,6 +12,9 @@ class Trigger extends Client
     public $_call;
     public $_users;
 
+    /**
+     * TODO doc block
+     */
     public function __construct($controller)
     {
         $this->_controller = $controller;
@@ -44,7 +47,7 @@ class Trigger extends Client
         //        "acknowledge" => true,
         //        "eligible" => [5026853095080135]
         //    ]
-        //)->then(function(){echo 'aknowledged';});
+        //);
         $session->call('server.get_user_sessions', $this->_users)->then(
             function ($res) use ($session) {
                 $session->publish(
@@ -58,17 +61,15 @@ class Trigger extends Client
 
     }
 
-    public function publish($args = [], $argsKw = [], $users = null)
+    /**
+     * TODO doc block
+     */
+    public function publish($args = [], $users = null)
     {
+        $argsKw = [], 
         $topic = $this->_uri($this->_controller->name, $this->_controller->request->action);
         if (!is_array($args)) {
             $args = [$args];
-        }
-        if (!is_array($argsKw)) {
-            $argsKw = [$argsKw];
-        }
-        if (!is_array($argsKw)) {
-            $argsKw = [$argsKw];
         }
 
         $this->_users = $users;
@@ -76,12 +77,18 @@ class Trigger extends Client
         $this->execute();
     }
 
+    /**
+     * TODO doc block
+     */
     public function success()
     {
         debug('acknowledgment recieved');
         $this->getLoop()->stop();
     }
 
+    /**
+     * TODO doc block
+     */
     public function error($error)
     {
         if ($error != null) {
