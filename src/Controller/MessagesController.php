@@ -57,19 +57,16 @@ class MessagesController extends AppController
             $message = $this->Messages->newEntity(
                 $this->request->data
             );
-            $this->Messages->save($message);
+
             if ($this->Messages->save($message)) {
+                $threadId = $message['thread_id'];
                 $this->set('_ws', [
-                    'users' => $this->,
-                    'data' => $this->messages->find()->all();
+                    'users' => $this->Messages->Threads->getUserIds($threadId),
+                    'data' => $this->Messages->find('withThreads', [$threadId])
                 ]);
             }
         }
 
-        //$threadUsers = $this->Messages->Threads->find('participants', [
-        //    'threadId' => $this->request->data['thread_id']
-        //]);
-        //
         //foreach ($threadUsers as $key => $user) {
         //    $this->request->data['message_read_statuses'][] = [
         //        'user_id' => $user['_matchingData']['Users']['id'],

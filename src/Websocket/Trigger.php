@@ -17,10 +17,10 @@ class Trigger extends Client
      */
     public function __construct($controller)
     {
+        parent::__construct();
         $this->_controller = $controller;
         $this->setAuthId('server');
         $this->addClientAuthenticator(new ClientWampCraAuthenticator('server', 'server'));
-        parent::__construct();
     }
 
     /**
@@ -36,28 +36,18 @@ class Trigger extends Client
                 $this->_call[2],
                 $this->_call[3]
             )->then([$this, 'success'], [$this, 'error']);
-            return
+        }else{
+            $session->call('server.get_user_sessions', $this->_users)->then(
+                function ($res) use ($session) {
+                    $session->publish(
+                        $this->_call[0],
+                        $this->_call[1],
+                        $this->_call[2],
+                        array_merge($this->_call[3], ['eligible' => $res[0]])
+                    )->then([$this, 'success'], [$this, 'error']);
+                }
+            );
         }
-
-        //$session->publish(
-        //    'messages.send',
-        //    ['fdsafd'],
-        //    [],
-        //    [
-        //        "acknowledge" => true,
-        //        "eligible" => [5026853095080135]
-        //    ]
-        //);
-        $session->call('server.get_user_sessions', $this->_users)->then(
-            function ($res) use ($session) {
-                $session->publish(
-                    $this->_call[0],
-                    $this->_call[1],
-                    $this->_call[2],
-                    array_merge($this->_call[3], ['eligible' => $res[0]])
-                )->then([$this, 'success'], [$this, 'error']);
-            }
-        );
     }
 
     /**

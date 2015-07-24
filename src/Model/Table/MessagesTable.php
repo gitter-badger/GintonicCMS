@@ -68,10 +68,8 @@ class MessagesTable extends Table
     {
         return $query
             ->where([
-                'thread_id IN' => $options['threadIds']
+                'thread_id IN' => $options
             ])
-            ->contain(['Users' => ['Files']])
-            ->group(['Messages.user_id'])
             ->order(['Messages.created' => 'asc']);
     }
 

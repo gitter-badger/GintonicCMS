@@ -36,6 +36,7 @@ class Client extends ThruwayClient
      */
     public function execute()
     {
+        echo 'executing';
         $this->start(false);
         $this->getLoop()->addTimer($this->timeout, [$this, 'kill']);
         $this->getLoop()->run();

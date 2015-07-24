@@ -16,6 +16,7 @@ namespace GintonicCMS\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 
 /**
  * Represents the Threads Table
@@ -55,6 +56,20 @@ class ThreadsTable extends Table
         ]);
     }
 
+    /**
+     * Returns the list of ids for users in a thread
+     *
+     * @param int $hreadId the thread we're requesting users from
+     */
+    public function getUserIds($threadId)
+    {
+        return $this->Users
+            ->find()
+            ->matching('Threads' , function ($q) {
+                return $q->where(['Threads.id' => 1]);
+            })
+            ->select('id');
+    }
     /**
      * Dynamic finder that find threads where a given set of users are
      * participants
@@ -175,13 +190,13 @@ class ThreadsTable extends Table
      * @param array $options not required
      * @return \Cake\ORM\Query The amended query
      */
-    public function findParticipants(Query $query, array $options)
+    public function findParticipants(Query $query, array $threadId)
     {
         return $query
-            ->matching('Users', function ($q) use ($options) {
+            ->matching('Users', function ($q) use ($threadId) {
                 return $q
                     ->where([
-                        'Threads.id' => $options['threadId'],
+                        'Threads.id IN' => $threadId,
                     ]);
             })
             ->select(['Threads.id', 'Users.id', 'Users.first', 'Users.last']);

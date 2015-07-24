@@ -52,6 +52,10 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'className' => 'GintonicCMS.Messages'
         ]);
+        $this->belongsToMany('Threads', [
+            'foreignKey' => 'user_id',
+            'className' => 'GintonicCMS.Threads'
+        ]);
         $this->hasMany('Acl.Aros', [
             'conditions' => ['Aros.model' => 'Users'],
             'foreignKey' => 'foreign_key'

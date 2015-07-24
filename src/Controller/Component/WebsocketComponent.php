@@ -67,8 +67,8 @@ class WebsocketComponent extends Component
         }
 
         $_ws = $event->subject()->viewVars['_ws'];
-        $data = (isset($_ws) && isset($_ws['data']) ? $_ws['data'] : null;
-        $users = (isset($_ws) && isset($_ws['users']) ? $_ws['users'] : null;
+        $data = (isset($_ws) && isset($_ws['data'])) ? $_ws['data'] : null;
+        $users = (isset($_ws) && isset($_ws['users'])) ? $_ws['users'] : null;
 
         $trigger = new Trigger($this->_controller);
         $trigger->publish($data, $users);
