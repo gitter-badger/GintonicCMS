@@ -66,48 +66,5 @@ class MessagesController extends AppController
                 ]);
             }
         }
-
-        //foreach ($threadUsers as $key => $user) {
-        //    $this->request->data['message_read_statuses'][] = [
-        //        'user_id' => $user['_matchingData']['Users']['id'],
-        //        'status' => 0
-        //    ];
-        //}
     }
-
-    //public function read()
-    //{
-    //    $this->autoRender = false;
-    //    $status['status'] = 'fail';
-    //    $userId = $this->request->Session()->read('Auth.User.id');
-    //
-    //    if ($this->Messages->markAsRead($this->request->data['messageIds'], $userId)) {
-    //        $status['status'] = 'ok';
-    //    }
-    //    echo json_encode($status);
-    //}
-
-    //public function delete()
-    //{
-    //    $this->autoRender = false;
-    //    $status['status'] = 'fail';
-    //    $userId = $this->request->Session()->read('Auth.User.id');
-    //
-    //    if ($this->Messages->markAsDelete($this->request->data['messageIds'], $userId)) {
-    //        $status['status'] = 'ok';
-    //    }
-    //    echo json_encode($status);
-    //}
-
-    //public function unread()
-    //{
-    //    $this->autoRender = false;
-    //    $status['status'] = 'fail';
-    //    $userId = $this->request->Session()->read('Auth.User.id');
-    //
-    //    if ($this->Messages->markAsUnread($this->request->data['messageIds'], $userId)) {
-    //        $status['status'] = 'ok';
-    //    }
-    //    echo json_encode($status);
-    //}
 }

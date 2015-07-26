@@ -71,7 +71,6 @@ class Trigger extends Client
      */
     public function success()
     {
-        debug('acknowledgment recieved');
         $this->getLoop()->stop();
     }
 

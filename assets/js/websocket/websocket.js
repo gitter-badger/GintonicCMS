@@ -65,7 +65,7 @@ define(function(require) {
 
     Websocket.prototype.publish = function(data) {
         if (this.session != null) {
-           this.session.publish('server', data);
+           this.session.call('server', data);
         }
     }
 
