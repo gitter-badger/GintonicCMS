@@ -2,7 +2,7 @@ define(function(require) {
 
     var websocket = require('gintonic_c_m_s/js/websocket/websocket');
 
-    var WebsocketMixin = {
+    var CommunicationMixin = {
 
         componentDidMount: function() {
             websocket.subscribe({
@@ -30,15 +30,31 @@ define(function(require) {
             });
         }, 
 
-        websocketSubmit: function(data) {
-            var destination = [
-                this.submitUrl,
-                this.props.id,
-            ];
-            websocket.publish(destination, JSON.stringify(data));
+        baseSubmit: function(data) {
+
+            $.ajax({
+                url: this.submitUrl,
+                method: "POST",
+                dataType: 'json',
+                cache: false,
+                data: data,
+            })
+            .done(function(data){
+                console.log('success');
+                console.log(data);
+                this.retrieve(data);
+            })
+            .fail(function(data){
+                console.log('fail');
+                console.log(data);
+            })
+            .always(function(data){
+                console.log('always');
+                console.log(data);
+            });
         },
     };
     
-    return WebsocketMixin;
+    return CommunicationMixin;
 });
 

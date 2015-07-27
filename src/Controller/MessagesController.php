@@ -49,17 +49,16 @@ class MessagesController extends AppController
      */
     public function send()
     {
-        $this->autoRender = false;
-
+        $success = false;
         if ($this->request->is(['post', 'put'])) {
             $user = $this->Auth->user();
-            debug($user);
             $this->request->data['user_id'] = $user['id'];
             $message = $this->Messages->newEntity(
                 $this->request->data
             );
 
-            if ($this->Messages->save($message)) {
+            $success = $this->Messages->save($message);
+            if ($success) {
                 $threadId = $message['thread_id'];
                 $this->set('_ws', [
                     'users' => $this->Messages->Threads->getUserIds($threadId)->toArray(),
@@ -67,5 +66,49 @@ class MessagesController extends AppController
                 ]);
             }
         }
+        $this->set('_serialize', ['success']);
+
+        //foreach ($threadUsers as $key => $user) {
+        //    $this->request->data['message_read_statuses'][] = [
+        //        'user_id' => $user['_matchingData']['Users']['id'],
+        //        'status' => 0
+        //    ];
+        //}
     }
+
+    //public function read()
+    //{
+    //    $this->autoRender = false;
+    //    $status['status'] = 'fail';
+    //    $userId = $this->request->Session()->read('Auth.User.id');
+    //
+    //    if ($this->Messages->markAsRead($this->request->data['messageIds'], $userId)) {
+    //        $status['status'] = 'ok';
+    //    }
+    //    echo json_encode($status);
+    //}
+
+    //public function delete()
+    //{
+    //    $this->autoRender = false;
+    //    $status['status'] = 'fail';
+    //    $userId = $this->request->Session()->read('Auth.User.id');
+    //
+    //    if ($this->Messages->markAsDelete($this->request->data['messageIds'], $userId)) {
+    //        $status['status'] = 'ok';
+    //    }
+    //    echo json_encode($status);
+    //}
+
+    //public function unread()
+    //{
+    //    $this->autoRender = false;
+    //    $status['status'] = 'fail';
+    //    $userId = $this->request->Session()->read('Auth.User.id');
+    //
+    //    if ($this->Messages->markAsUnread($this->request->data['messageIds'], $userId)) {
+    //        $status['status'] = 'ok';
+    //    }
+    //    echo json_encode($status);
+    //}
 }

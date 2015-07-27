@@ -4,7 +4,9 @@ namespace GintonicCMS\Websocket;
 
 use Cake\Contoller\Controller;
 use Cake\Core\App;
+use Psr\Log\NullLogger;
 use Thruway\Authentication\ClientWampCraAuthenticator;
+use Thruway\Logging\Logger;
 
 class Trigger extends Client
 {
@@ -17,6 +19,7 @@ class Trigger extends Client
      */
     public function __construct($controller)
     {
+        Logger::set(new NullLogger());
         parent::__construct();
         $this->_controller = $controller;
         $this->setAuthId('server');
@@ -29,8 +32,7 @@ class Trigger extends Client
      */
     public function onSessionStart($session, $transport)
     {
-        debug('testing');exit;
-        if ($this->users == null) {
+        if ($this->_users == null) {
             $session->publish(
                 $this->_call[0],
                 $this->_call[1],
@@ -62,8 +64,8 @@ class Trigger extends Client
             $args = [$args];
         }
 
-        $this->_users = [1,2,3];
-        $this->_call = [$topic, [], $argsKw, ["acknowledge" => true]];
+        $this->_users = [['authid' => 1]];//$users;
+        $this->_call = [$topic, $args, $argsKw, ["acknowledge" => true]];
         $this->execute();
     }
 
@@ -72,7 +74,6 @@ class Trigger extends Client
      */
     public function success()
     {
-        debug('acknowledgment recieved');
         $this->getLoop()->stop();
     }
 
