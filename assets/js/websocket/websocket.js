@@ -63,9 +63,12 @@ define(function(require) {
         }
     }
 
-    Websocket.prototype.publish = function(data) {
+    Websocket.prototype.publish = function(url, data) {
         if (this.session != null) {
-           this.session.call('server', data);
+            var authdata = [[user, key]];
+            authdata.push(url);
+            authdata.push(data);
+            this.session.call('server', authdata);
         }
     }
 

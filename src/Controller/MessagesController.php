@@ -52,8 +52,9 @@ class MessagesController extends AppController
         $this->autoRender = false;
 
         if ($this->request->is(['post', 'put'])) {
-            //$user = $this->Auth->user();
-            //$this->request->data['user_id'] = $user['id'];
+            $user = $this->Auth->user();
+            debug($user);
+            $this->request->data['user_id'] = $user['id'];
             $message = $this->Messages->newEntity(
                 $this->request->data
             );
@@ -61,8 +62,8 @@ class MessagesController extends AppController
             if ($this->Messages->save($message)) {
                 $threadId = $message['thread_id'];
                 $this->set('_ws', [
-                    'users' => $this->Messages->Threads->getUserIds($threadId),
-                    'data' => $this->Messages->find('withThreads', [$threadId])
+                    'users' => $this->Messages->Threads->getUserIds($threadId)->toArray(),
+                    'data' => $this->Messages->find('withThreads', [$threadId])->toArray()
                 ]);
             }
         }

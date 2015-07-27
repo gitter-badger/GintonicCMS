@@ -29,6 +29,7 @@ class Trigger extends Client
      */
     public function onSessionStart($session, $transport)
     {
+        debug('testing');exit;
         if ($this->users == null) {
             $session->publish(
                 $this->_call[0],
@@ -61,8 +62,8 @@ class Trigger extends Client
             $args = [$args];
         }
 
-        $this->_users = $users;
-        $this->_call = [$topic, $args, $argsKw, ["acknowledge" => true]];
+        $this->_users = [1,2,3];
+        $this->_call = [$topic, [], $argsKw, ["acknowledge" => true]];
         $this->execute();
     }
 
@@ -71,6 +72,7 @@ class Trigger extends Client
      */
     public function success()
     {
+        debug('acknowledgment recieved');
         $this->getLoop()->stop();
     }
 

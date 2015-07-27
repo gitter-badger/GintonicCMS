@@ -23,17 +23,7 @@ define(function(require) {
         },
 
         submit: function(data){
-            //console.log(data);
-            //this.state.data.messages.push({
-            //    body:data['body'],
-            //    user:{
-            //        email: 'test@blackhole.io'
-            //    }
-            //});
-            //this.setState({data: this.state.data});
-
             data['thread_id'] = 1;
-            data['user_id'] = 4;
             this.websocketSubmit(data);
         },
 

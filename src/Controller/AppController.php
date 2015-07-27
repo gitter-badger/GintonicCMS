@@ -108,6 +108,7 @@ class AppController extends Controller
 
             ]
         ]);
+        //debug($this->request->session()->read());exit;
         parent::initialize();
         $this->__autoLogin();
     }

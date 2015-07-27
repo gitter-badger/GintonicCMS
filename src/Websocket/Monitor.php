@@ -11,31 +11,28 @@ use Cake\Network\Session;
 use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
 use GintonicCMS\Websocket\Procedure\RegisterProcedure;
-#use Thruway\Authentication\ClientWampCraAuthenticator;
-
 use Thruway\Peer\Client;
 
 class Monitor extends Client
 {
+    public $sessions = [];
+
     /**
-     * TODO doc block
+     * @param \Thruway\ClientSession $session the user session
+     * @param \Thruway\Transport\TransportInterface $transport the transport
      */
-    public $topic = 'server';
+    public function onSessionStart($session, $transport)
+    {
+        $session->subscribe('wamp.metaevent.session.on_join', [$this, 'onJoin']);
+        $session->subscribe('wamp.metaevent.session.on_leave', [$this, 'onLeave']);
+        $session->register('server.get_user_sessions', [$this, 'getUserSession']);
+        $session->register('server', [$this, 'parse']);
+    }
 
     /**
      * TODO doc block
      */
-    //public function __construct()
-    //{
-    //    parent::__construct();
-    //    //$this->setAuthId('server');
-    //    //$this->addClientAuthenticator(new ClientWampCraAuthenticator('server', 'server'));
-    //}
-
-    /**
-     * TODO doc block
-     */
-    public function dispatch($url = '/', $id = null, $data = [])
+    public function dispatch($auth, $url = '/', $data = [])
     {
         $base = '';
         $webroot = '/';
@@ -43,6 +40,9 @@ class Monitor extends Client
             'defaults' => 'php',
             'cookiePath' => $webroot
         ];
+
+        $session = Session::create($sessionConfig);
+        $session->write(['websocket_user_id' => $auth[0]]);
 
         $config = [
             'query' => $_GET,
@@ -52,7 +52,7 @@ class Monitor extends Client
             'environment' => ['REQUEST_METHOD' => 'POST'],
             'base' => $base,
             'webroot' => $webroot,
-            'session' => Session::create($sessionConfig)
+            'session' => $session
         ];
         $config['url'] = $url;
 
@@ -71,19 +71,43 @@ class Monitor extends Client
      */
     public function parse($args)
     {
-        debug($args);
-        $url = $args[0];
-        $id = $args[1];
+        $auth = $args[0];
+        $destination = $args[1];
         $data = json_decode($args[2], true);
-        $this->dispatch($url, $id, $data);
+        $this->dispatch($auth, $destination[0], $data);
     }
 
     /**
-     * @param \Thruway\ClientSession $session the user session
-     * @param \Thruway\Transport\TransportInterface $transport the transport
+     * TODO doc block
      */
-    public function onSessionStart($session, $transport)
+    public function onJoin($args)
     {
-        $session->subscribe($this->topic, [$this, 'parse']);
+        $this->sessions[$args[0]->authid][] = $args[0]->session;
+        debug($this->sessions);
+    }
+
+    /**
+     * TODO doc block
+     */
+    public function onLeave($args)
+    {
+        //remove the session
+        if (!isset($this->sessions[$args[0]->authid])) {
+            return;
+        }
+
+        foreach ($this->sessions[$args[0]->authid] as $k => $session) {
+            if ($session === $args[0]->session) {
+                unset($this->sessions[$args[0]->authid][$k]);
+            }
+        }
+    }
+
+    /**
+     * TODO doc block
+     */
+    public function getUserSession($args)
+    {
+        return $this->sessions[$args[0]->authid];
     }
 }

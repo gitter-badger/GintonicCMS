@@ -14,22 +14,16 @@ use Thruway\Authentication\AuthenticationManager;
 
 $router = new Router();
 
-// setup some users to auth against
-$userDb = new UserDb();
-
 $authMgr = new AuthenticationManager();
 $router->setAuthenticationManager($authMgr);
 $router->addInternalClient($authMgr);
 
 $authProvClient = new WampCraAuthProvider(["realm1"]);
-$authProvClient->setUserDb($userDb);
+$authProvClient->setUserDb(new userDb());
 $router->addInternalClient($authProvClient);
 
 $monitor = new Monitor("realm1");
 $router->addInternalClient($monitor);
-
-//$discloser = new Discloser('realm1');
-//$router->registerModule($discloser);
 
 $transportProvider = new RatchetTransportProvider("127.0.0.1", 9090);
 $router->addTransportProvider($transportProvider);

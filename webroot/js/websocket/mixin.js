@@ -31,13 +31,11 @@ define(function(require) {
         }, 
 
         websocketSubmit: function(data) {
-
-            var payload = [
+            var destination = [
                 this.submitUrl,
                 this.props.id,
-                JSON.stringify(data)
             ];
-            websocket.publish(payload);
+            websocket.publish(destination, JSON.stringify(data));
         },
     };
     

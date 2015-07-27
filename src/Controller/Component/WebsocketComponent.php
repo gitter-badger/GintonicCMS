@@ -58,6 +58,20 @@ class WebsocketComponent extends Component
      * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection
      * this component can use to lazy load its components.
      */
+    public function startup(Event $event)
+    {
+        $users = $this->_controller->loadModel('Users');
+        $user = $users->findById($this->request->session()->read('websocket_user_id'))->first();
+        $this->_controller->Auth->setUser($user->toArray());
+    }
+
+    /**
+     * Callback fired before the output is sent to the browser and launches the
+     * event on websockets if need be.
+     *
+     * @param \Cake\Controller\ComponentRegistry $collection A ComponentCollection
+     * this component can use to lazy load its components.
+     */
     public function shutdown(Event $event)
     {
         $action = $event->subject()->request->action;
