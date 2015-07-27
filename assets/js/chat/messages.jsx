@@ -4,7 +4,11 @@ define(function(require) {
 
     var Messages = React.createClass({
         render: function() {
-            var messages = this.props.data.map(function (message){
+            var messages = this.props.data.messages.map(function (message){
+                var email = 'Me';
+                if(('user' in message) && ('email' in message.user)) {
+                    email = message.user.email;;
+                }
                 return(
                     <li className="left clearfix">
                         <span className="chat-img pull-left">
@@ -12,7 +16,7 @@ define(function(require) {
                         </span>
                         <div className="chat-body clearfix">
                             <div className="header">
-                                <strong className="primary-font">{message.user.email}</strong> 
+                                <strong className="primary-font">{email}</strong> 
                                 <small className="pull-right text-muted">
                                     <span className="glyphicon glyphicon-time"></span>
                                     12 mins ago

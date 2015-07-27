@@ -65,7 +65,7 @@ class Trigger extends Client
         }
 
         $this->_users = [['authid' => 1]];//$users;
-        $this->_call = [$topic, $args, $argsKw, ["acknowledge" => true]];
+        $this->_call = [$topic, [json_encode($args)], $argsKw, ["acknowledge" => true]];
         $this->execute();
     }
 

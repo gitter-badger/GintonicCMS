@@ -107,7 +107,7 @@ class ThreadsTable extends Table
                 ],
                 'Users'
             ])
-            ->limit(10);
+            ->first();
     }
     
     /**

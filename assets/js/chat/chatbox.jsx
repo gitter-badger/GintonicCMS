@@ -10,39 +10,28 @@ define(function(require) {
 
         mixins: [CommunicationMixin],
 
-        retrieveUrl: "/threads/get.json",
-        submitUrl:  "/messages/send.json",
+        fetchUrl: "/threads/get.json",
+        sendUrl:  "/messages/send.json",
         recieveUri: "messages.send",
 
         getInitialState: function() {
             return {
-                data: {
-                    messages: [],
-                }
+                messages: []
             };
         },
 
-        submit: function(data){
-            //console.log(data);
-            //this.state.data.messages.push({
-            //    body:data['body'],
-            //    user:{
-            //        email: 'test@blackhole.io'
-            //    }
-            //});
-            //this.setState({data: this.state.data});
+        preSend: function(data){
             data['thread_id'] = 1;
-            this.baseSubmit(data);
+            this.send(data);
         },
 
-        retrieve: function(data){
-            this.setState({data: data['threads'][0]});
+        fetched: function(data){
+            this.setState({messages: data['threads']['messages']});
         },
 
-        recieve: function(data){
-            console.log('recieved data');
-            console.log(data);
-            //this.setState({data: data['threads'][0]});
+        recieved: function(data){
+            this.state.messages.push(data);
+            this.setState({messages: this.state.messages});
         },
 
         render: function() {
@@ -51,9 +40,9 @@ define(function(require) {
                     <Heading />
                     <div className="panel-collapse collapse in" id="collapseOne">
                         <div className="panel-body">
-                            <Messages data={this.state.data.messages}/>
+                            <Messages data={this.state}/>
                         </div>
-                        <Compose submit={this.submit}/>
+                        <Compose submit={this.preSend}/>
                     </div>
                 </div>
             );

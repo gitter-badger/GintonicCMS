@@ -57,16 +57,17 @@ class MessagesController extends AppController
                 $this->request->data
             );
 
-            $success = $this->Messages->save($message);
-            if ($success) {
+            $message = $this->Messages->save($message);
+            if ($message) {
                 $threadId = $message['thread_id'];
                 $this->set('_ws', [
                     'users' => $this->Messages->Threads->getUserIds($threadId)->toArray(),
-                    'data' => $this->Messages->find('withThreads', [$threadId])->toArray()
+                    'data' => $message->toArray()
                 ]);
             }
         }
-        $this->set('_serialize', ['success']);
+        $this->set(compact('message'));
+        $this->set('_serialize', ['message']);
 
         //foreach ($threadUsers as $key => $user) {
         //    $this->request->data['message_read_statuses'][] = [

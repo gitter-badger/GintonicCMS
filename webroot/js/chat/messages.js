@@ -4,7 +4,11 @@ define(function(require) {
 
     var Messages = React.createClass({displayName: "Messages",
         render: function() {
-            var messages = this.props.data.map(function (message){
+            var messages = this.props.data.messages.map(function (message){
+                var email = 'Me';
+                if(('user' in message) && ('email' in message.user)) {
+                    email = message.user.email;;
+                }
                 return(
                     React.createElement("li", {className: "left clearfix"}, 
                         React.createElement("span", {className: "chat-img pull-left"}, 
@@ -12,7 +16,7 @@ define(function(require) {
                         ), 
                         React.createElement("div", {className: "chat-body clearfix"}, 
                             React.createElement("div", {className: "header"}, 
-                                React.createElement("strong", {className: "primary-font"}, message.user.email), 
+                                React.createElement("strong", {className: "primary-font"}, email), 
                                 React.createElement("small", {className: "pull-right text-muted"}, 
                                     React.createElement("span", {className: "glyphicon glyphicon-time"}), 
                                     "12 mins ago"

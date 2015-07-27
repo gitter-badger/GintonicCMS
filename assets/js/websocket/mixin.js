@@ -1,6 +1,7 @@
 define(function(require) {
 
     var websocket = require('gintonic_c_m_s/js/websocket/websocket');
+    var $ = require('jquery');
 
     var CommunicationMixin = {
 
@@ -9,48 +10,50 @@ define(function(require) {
                 topic: this.recieveUri,
                 method: this.recieve,
             });
-            this.baseRetrieve();
+            this.fetch();
         },
 
-        baseRetrieve: function(){
+        recieve: function(data){
+            var data = JSON.parse(data[0]);
+            this.recieved(data);
+        },
+
+        fetch: function(){
+            var that = this;
             $.ajax({
-                url: this.retrieveUrl,
+                url: this.fetchUrl,
                 method: "POST",
                 dataType: 'json',
                 cache: false,
                 data: {
                     id: [this.props.id]
-                },
-                success: function(data) {
-                    this.retrieve(data);
-                }.bind(this),
-                    error: function(xhr, status, err) {
-                    console.error(this.retrieveUrl, status, err.toString());
-                }.bind(this)
-            });
-        }, 
-
-        baseSubmit: function(data) {
-
-            var that = this;
-            $.ajax({
-                url: this.submitUrl,
-                method: "POST",
-                dataType: 'json',
-                cache: false,
-                data: data,
+                }
             })
             .done(function(data){
-                console.log('success');
-                console.log(data);
-                that.retrieve(data);
+                that.fetched(data);
             })
             .fail(function(data){
                 console.log('fail');
                 console.log(data);
+            });
+        }, 
+
+        send: function(data) {
+            var that = this;
+            $.ajax({
+                url: this.sendUrl,
+                method: "POST",
+                dataType: 'json',
+                cache: false,
+                data: data
             })
-            .always(function(data){
-                console.log('always');
+            .done(function(data){
+                if ( $.isFunction(that.sent) ) {
+                    that.sent(data);
+                }
+            })
+            .fail(function(data){
+                console.log('fail');
                 console.log(data);
             });
         },
