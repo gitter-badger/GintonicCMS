@@ -4,11 +4,11 @@ define(function(require) {
     var Messages = require('chat/messages');
     var Heading = require('chat/heading');
     var Compose = require('chat/compose');
-    var WebsocketMixin = require('gintonic_c_m_s/js/websocket/mixin');
+    var CommunicationMixin = require('gintonic_c_m_s/js/websocket/mixin');
 
     var ChatBox = React.createClass({displayName: "ChatBox",
 
-        mixins: [WebsocketMixin],
+        mixins: [CommunicationMixin],
 
         retrieveUrl: "/threads/get.json",
         submitUrl:  "/messages/send.json",
@@ -31,10 +31,8 @@ define(function(require) {
             //    }
             //});
             //this.setState({data: this.state.data});
-
             data['thread_id'] = 1;
-            data['user_id'] = 4;
-            this.websocketSubmit(data);
+            this.baseSubmit(data);
         },
 
         retrieve: function(data){
@@ -44,7 +42,7 @@ define(function(require) {
         recieve: function(data){
             console.log('recieved data');
             console.log(data);
-            this.setState({data: data['threads'][0]});
+            //this.setState({data: data['threads'][0]});
         },
 
         render: function() {

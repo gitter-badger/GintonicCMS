@@ -24,11 +24,7 @@ class SessionManager extends Client
      */
     public function onJoin($args)
     {
-        echo var_dump($this->sessions);
-        echo var_dump($args[0]->session);
-        //echo var_dump($this->sessions[$args[0]->authid]);
         $this->sessions[$args[0]->authid][] = $args[0]->session;
-        echo var_dump($this->sessions);
     }
 
     /**
