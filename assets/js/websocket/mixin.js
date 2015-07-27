@@ -32,6 +32,7 @@ define(function(require) {
 
         baseSubmit: function(data) {
 
+            var that = this;
             $.ajax({
                 url: this.submitUrl,
                 method: "POST",
@@ -42,7 +43,7 @@ define(function(require) {
             .done(function(data){
                 console.log('success');
                 console.log(data);
-                this.retrieve(data);
+                that.retrieve(data);
             })
             .fail(function(data){
                 console.log('fail');
