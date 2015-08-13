@@ -32,7 +32,7 @@
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "dev-master",
         "gintonicweb/requirejs": "dev-master",
-        "gintonicweb/websocket": "dev-master"
+        "gintonicweb/websockets": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
