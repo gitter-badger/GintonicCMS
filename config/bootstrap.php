@@ -9,6 +9,7 @@ Plugin::load('Crud');
 Plugin::load('CrudView');
 Plugin::load('Requirejs');
 Plugin::load('Search');
+Plugin::load('Websockets');
 
 // Themes
 Plugin::load('AdminTheme');

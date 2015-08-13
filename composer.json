@@ -31,7 +31,8 @@
         "gintonicweb/payments": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "dev-master",
-        "gintonicweb/requirejs": "dev-master"
+        "gintonicweb/requirejs": "dev-master",
+        "gintonicweb/websocket": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
