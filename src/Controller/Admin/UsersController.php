@@ -2,6 +2,7 @@
 namespace GintonicCMS\Controller\Admin;
 
 use App\Controller\Admin\AppController;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -10,4 +11,9 @@ use App\Controller\Admin\AppController;
  */
 class UsersController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields_blacklist', ['password', 'token']);
+    }
 }
