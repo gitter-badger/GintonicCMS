@@ -11,6 +11,10 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController
 {
+    /**
+     * The password and token fields shouldn't be displayed
+     * in the admin panel
+     */
     public function beforeFilter(Event $event)
     {
         $action = $this->Crud->action();
