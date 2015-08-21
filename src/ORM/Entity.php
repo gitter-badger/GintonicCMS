@@ -1,6 +1,6 @@
 <?php
 
-namespace GintonicCMS\Model\Entity;
+namespace GintonicCMS\ORM;
 
 use Cake\ORM\Entity as CakeEntity;
 
