@@ -32,7 +32,8 @@
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "dev-master",
         "gintonicweb/requirejs": "dev-master",
-        "gintonicweb/websockets": "dev-master"
+        "gintonicweb/websockets": "dev-master",
+        "davidyell/proffer": "~0.4"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
