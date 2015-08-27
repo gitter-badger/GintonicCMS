@@ -10,7 +10,7 @@ Plugin::load('CrudView');
 Plugin::load('Requirejs');
 Plugin::load('Search');
 Plugin::load('Websockets');
-Plugin::load('Proffer', ['bootstrap' => true]);
+Plugin::load('Proffer');
 
 // Themes
 Plugin::load('AdminTheme');
