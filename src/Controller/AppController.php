@@ -51,6 +51,7 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Cookie');
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('Search.Prg');
         $this->loadComponent('Crud.Crud', [
             'actions' => [
                 'Crud.Index',
@@ -63,6 +64,7 @@ class AppController extends Controller
                 'CrudView.View',
                 'Crud.RelatedModels',
                 'Crud.Redirect',
+                'CrudView.Search',
             ]
         ]);
         $this->loadComponent('Auth', [
