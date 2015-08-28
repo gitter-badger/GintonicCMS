@@ -10,7 +10,7 @@ Plugin::load('CrudView');
 Plugin::load('Requirejs');
 Plugin::load('Search');
 Plugin::load('Websockets');
-Plugin::load('Proffer');
+Plugin::load('Josegonzalez/Upload');
 
 // Themes
 Plugin::load('AdminTheme');

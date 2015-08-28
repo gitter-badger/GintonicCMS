@@ -51,7 +51,9 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Cookie');
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Search.Prg');
+        if ($this->request->action === 'index') {
+            $this->loadComponent('Search.Prg');
+        }
         $this->loadComponent('Crud.Crud', [
             'actions' => [
                 'Crud.Index',

@@ -33,7 +33,7 @@
         "gintonicweb/users": "dev-master",
         "gintonicweb/requirejs": "dev-master",
         "gintonicweb/websockets": "dev-master",
-        "davidyell/proffer": "~0.4"
+        "josegonzalez/cakephp-upload": "3.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
