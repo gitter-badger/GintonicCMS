@@ -1,16 +1,24 @@
 <?php
 
 use Cake\Core\Plugin;
+use Cake\Routing\DispatcherFactory;
 
-// Utilities and core
 Plugin::load('Acl', ['bootstrap' => true]);
+
+// Crud stack
 Plugin::load('BootstrapUI');
 Plugin::load('Crud');
 Plugin::load('CrudView');
-Plugin::load('Requirejs');
 Plugin::load('Search');
+
+// Javascript
+Plugin::load('Requirejs');
 Plugin::load('Websockets');
+
+// File management
 Plugin::load('Josegonzalez/Upload');
+Plugin::load('ADmad/Glide', ['bootstrap' => true]);
+DispatcherFactory::add('ADmad/Glide.Glide', ['for' => '/images']);
 
 // Themes
 Plugin::load('AdminTheme');
