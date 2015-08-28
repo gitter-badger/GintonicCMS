@@ -1,5 +1,6 @@
 <?php
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Routing\DispatcherFactory;
 
@@ -18,6 +19,7 @@ Plugin::load('Websockets');
 // File management
 Plugin::load('Josegonzalez/Upload');
 Plugin::load('ADmad/Glide', ['bootstrap' => true]);
+Configure::write('Glide.serverConfig.source', ROOT . DS . 'uploads/');
 DispatcherFactory::add('ADmad/Glide.Glide', ['for' => '/images']);
 
 // Themes
