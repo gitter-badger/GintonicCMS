@@ -33,6 +33,6 @@ class AppController extends GintonicAppController
     public function initialize()
     {
         parent::initialize();
-        $this->getView()->theme('AdminTheme');
+        $this->viewBuilder()->theme('AdminTheme');
     }
 }
