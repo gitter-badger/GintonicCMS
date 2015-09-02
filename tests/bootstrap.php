@@ -118,4 +118,3 @@ Plugin::load('GintonicCMS', [
     'routes' => true,
     'autoload' => true
 ]);
-Plugin::load('CrudView', ['path' => ROOT]);
