@@ -4,7 +4,7 @@ namespace GintonicCMS\ORM;
 
 use Cake\ORM\Entity as CakeEntity;
 
-class Entity extends CakeEntity 
+class Entity extends CakeEntity
 {
     /**
      * The main method for any enumeration, should be called statically
@@ -15,7 +15,7 @@ class Entity extends CakeEntity
      * @param array $options (actual data)
      * @return mixed string/array
      */
-    public static function enum($value, array $options, $default = null) 
+    public static function enum($value, array $options, $default = null)
     {
         if ($value !== null && !is_array($value)) {
             if (array_key_exists($value, $options)) {
@@ -32,5 +32,4 @@ class Entity extends CakeEntity
         }
         return $options;
     }
-
 }
