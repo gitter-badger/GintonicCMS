@@ -26,9 +26,6 @@
 
             <directory suffix=".php">./tests/</directory>
             <directory suffix=".ctp">./tests/</directory>
-
-            <directory suffix=".php">./src/TestSuite/</directory>
-            <directory suffix=".ctp">./src/TestSuite/</directory>
         </blacklist>
     </filter>
 

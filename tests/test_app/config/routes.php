@@ -1,5 +1,5 @@
 <?php
-namespace Crud\Test\App\Config;
+namespace GintonicCMS\Test\App\Config;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
