@@ -51,6 +51,8 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Cookie');
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('Websockets.Websocket');
+
         if ($this->request->action === 'index') {
             $this->loadComponent('Search.Prg');
         }
@@ -69,14 +71,26 @@ class AppController extends Controller
                 'CrudView.Search',
             ]
         ]);
+
         $this->loadComponent('Auth', [
             'authorize' => 'Controller',
             'authenticate' => [
-                'Form' => [
+                'FOC/Authenticate.Cookie' => [
                     'fields' => [
                         'username' => 'email',
                         'password' => 'password'
-                    ]
+                    ],
+                    'userModel' => 'Users.Users',
+                    //'scope' => ['User.active' => 1]
+                ],
+                'FOC/Authenticate.MultiColumn' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ],
+                    'columns' => ['email'],
+                    'userModel' => 'Users.Users',
+                    //'scope' => ['Users.active' => 1]
                 ]
             ],
             'loginAction' => [
@@ -108,7 +122,6 @@ class AppController extends Controller
             ]
         ]);
         parent::initialize();
-        $this->__autoLogin();
     }
 
     /**
@@ -140,20 +153,5 @@ class AppController extends Controller
             return $this->Acl->check(['Users' => $user], 'all');
         }
         return false;
-    }
-
-    /**
-     * If the use is already identified via the cookie, we log him in
-     * automatically.
-     *
-     * @return void
-     */
-    private function __autoLogin()
-    {
-        if (!$this->Cookie->read('User')) {
-            return;
-        }
-        $user = $this->Cookie->read('User');
-        $this->Auth->setUser($user);
     }
 }

@@ -28,7 +28,7 @@ Plugin::load('TwbsTheme');
 
 // Application base
 Plugin::load('Payments', ['routes' => true]);
-Plugin::load('Users', ['routes' => true]);
+Plugin::load('Users', ['routes' => true, 'bootstrap' => 'true']);
 
 
 
