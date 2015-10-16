@@ -14,7 +14,9 @@ Plugin::load('Search');
 
 // Javascript
 Plugin::load('Requirejs');
-Plugin::load('Websockets');
+Plugin::load('Websockets', ['bootstrap' => true]);
+Configure::write('Websockets.userModel', 'Users.Users');
+Configure::write('Websockets.scope', false);
 
 // File management
 Plugin::load('Josegonzalez/Upload');
@@ -26,9 +28,12 @@ DispatcherFactory::add('ADmad/Glide.Glide', ['for' => '/images']);
 Plugin::load('AdminTheme');
 Plugin::load('TwbsTheme');
 
-// Application base
-Plugin::load('Payments', ['routes' => true]);
+// Users Management
 Plugin::load('Users', ['routes' => true, 'bootstrap' => 'true']);
+Plugin::load('FOC/Authenticate');
+
+// Application base
+Plugin::load('Messages', ['routes' => true, 'bootstrap' => 'true']);
 
 
 
