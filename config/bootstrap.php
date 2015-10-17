@@ -20,8 +20,17 @@ Configure::write('Websockets.scope', false);
 
 // File management
 Plugin::load('Josegonzalez/Upload');
-Plugin::load('ADmad/Glide', ['bootstrap' => true]);
-Configure::write('Glide.serverConfig.source', ROOT . DS . 'uploads/');
+Plugin::load('ADmad/Glide');
+Configure::write('Glide', [
+    'serverConfig' => [
+        'base_url' => '/images/',
+        'source' => ROOT . DS . 'uploads/',
+        'cache' => WWW_ROOT . 'cache',
+        'response' => new ADmad\Glide\Responses\CakeResponseFactory(),
+    ],
+    'secureUrls' => true,
+]);
+
 DispatcherFactory::add('ADmad/Glide.Glide', ['for' => '/images']);
 
 // Themes
