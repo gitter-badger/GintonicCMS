@@ -40,6 +40,7 @@ Plugin::load('TwbsTheme');
 // Users Management
 Plugin::load('Users', ['routes' => true, 'bootstrap' => 'true']);
 Plugin::load('FOC/Authenticate');
+Plugin::load('Permissions', ['routes' => true]);
 
 // Application base
 Plugin::load('Messages', ['routes' => true, 'bootstrap' => 'true']);
