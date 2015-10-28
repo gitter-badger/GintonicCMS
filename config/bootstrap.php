@@ -19,19 +19,7 @@ Configure::write('Websockets.userModel', 'Users.Users');
 Configure::write('Websockets.scope', false);
 
 // File management
-Plugin::load('Josegonzalez/Upload');
-Plugin::load('ADmad/Glide');
-Configure::write('Glide', [
-    'serverConfig' => [
-        'base_url' => '/images/',
-        'source' => ROOT . DS . 'uploads/',
-        'cache' => WWW_ROOT . 'cache',
-        'response' => new ADmad\Glide\Responses\CakeResponseFactory(),
-    ],
-    'secureUrls' => true,
-]);
-
-DispatcherFactory::add('ADmad/Glide.Glide', ['for' => '/images']);
+Plugin::load('Images', ['routes' => true, 'bootstrap' => true]);
 
 // Themes
 Plugin::load('AdminTheme');

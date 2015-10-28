@@ -30,15 +30,13 @@
         "FriendsOfCake/crud-view": "dev-master",
         "FriendsOfCake/search": "dev-master",
         "gintonicweb/admin-theme": "dev-master",
+        "gintonicweb/images": "dev-master",
         "gintonicweb/messages": "dev-master",
         "gintonicweb/permissions": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "dev-master",
         "gintonicweb/requirejs": "dev-master",
-        "gintonicweb/websockets": "dev-master",
-        "josegonzalez/cakephp-upload": "3.*@dev",
-        "league/glide": "dev-master",
-        "admad/cakephp-glide": "1.0.x-dev"
+        "gintonicweb/websockets": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
