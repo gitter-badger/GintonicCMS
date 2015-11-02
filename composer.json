@@ -35,7 +35,7 @@
         "gintonicweb/permissions": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "dev-master",
-        "gintonicweb/requirejs": "dev-master",
+        "gintonicweb/requirejs": "~0.1",
         "gintonicweb/websockets": "dev-master"
     },
     "require-dev": {
