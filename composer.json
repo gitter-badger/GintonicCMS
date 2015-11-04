@@ -34,9 +34,14 @@
         "gintonicweb/messages": "dev-master",
         "gintonicweb/permissions": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
-        "gintonicweb/users": "dev-master",
+        "gintonicweb/users": "@dev",
         "gintonicweb/requirejs": "~0.1",
-        "gintonicweb/websockets": "dev-master"
+        "gintonicweb/websockets": "dev-master",
+        "josegonzalez/cakephp-upload": "3.*@dev",
+        "league/glide": "dev-master",
+        "admad/cakephp-glide": "dev-master",
+        "admad/cakephp-jwt-auth": "1.0.*@dev",
+        "muffin/trash": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
