@@ -28,7 +28,7 @@ class SetupComponent extends Component
      * Check whether table is exists in database or not.
      *
      * @param string $tableName Name of the table to check.
-     * @return boolean True if table exists, False else.
+     * @return bool True if table exists, False else.
      */
     public function tableExists($tableName, $connectionName = 'default')
     {
@@ -49,7 +49,7 @@ class SetupComponent extends Component
      * Test database connection.
      *
      * @param type $dataSource name of data source.
-     * @return boolean True if we're able to connect to the database
+     * @return bool True if we're able to connect to the database
      */
     public function databaseConnection($dataSource = 'default')
     {

@@ -3,8 +3,8 @@
 namespace GintonicCMS\Shell;
 
 use Cake\Console\Shell;
-use Migrations\Shell\MigrationsShell as BaseShell;
 use Migrations\MigrationsDispatcher;
+use Migrations\Shell\MigrationsShell as BaseShell;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**

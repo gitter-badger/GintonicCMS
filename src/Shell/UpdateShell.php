@@ -17,7 +17,7 @@ class UpdateShell extends Shell
      *
      * @return bool|int Success or error code.
      */
-    public function main() 
+    public function main()
     {
         $connections = ConnectionManager::configured();
         if (empty($connections)) {
@@ -37,6 +37,9 @@ class UpdateShell extends Shell
         $this->permissions();
     }
 
+    /**
+     * todo
+     */
     public function composer($command)
     {
         $input = new ArrayInput(['command' => $command]);
@@ -45,12 +48,18 @@ class UpdateShell extends Shell
         $application->run($input);
     }
 
+    /**
+     * todo
+     */
     public function migrate($plugin = null)
     {
         $plugin = ($plugin === null)? '' : ' -p ' . $plugin;
         $this->dispatchShell('GintonicCMS.migrations migrate' . $plugin);
     }
 
+    /**
+     * todo
+     */
     public function permissions()
     {
         Configure::write('Acl.classname', 'Acl\Adapter\DbAcl');
