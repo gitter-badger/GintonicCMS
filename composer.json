@@ -33,6 +33,7 @@
         "gintonicweb/images": "dev-master",
         "gintonicweb/messages": "dev-master",
         "gintonicweb/permissions": "dev-master",
+        "gintonicweb/posts": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "@dev",
         "gintonicweb/requirejs": "~0.1",
