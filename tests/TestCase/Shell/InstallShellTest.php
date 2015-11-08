@@ -2,12 +2,12 @@
 namespace GintonicCMS\Test\TestCase\Shell;
 
 use Cake\TestSuite\TestCase;
-use GintonicCMS\Shell\UpdateShell;
+use GintonicCMS\Shell\InstallShell;
 
 /**
- * GintonicCMS\Shell\UpdateShell Test Case
+ * GintonicCMS\Shell\InstallShell Test Case
  */
-class UpdateShellTest extends TestCase
+class InstallShellTest extends TestCase
 {
 
     /**
@@ -19,7 +19,7 @@ class UpdateShellTest extends TestCase
     {
         parent::setUp();
         $this->io = $this->getMock('Cake\Console\ConsoleIo');
-        $this->Update = new UpdateShell($this->io);
+        $this->Install = new InstallShell($this->io);
     }
 
     /**
@@ -29,7 +29,7 @@ class UpdateShellTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Update);
+        unset($this->Install);
 
         parent::tearDown();
     }
