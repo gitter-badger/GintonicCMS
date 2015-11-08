@@ -12,6 +12,11 @@ use Posts\Model\Entity\Post;
  */
 class PostsController extends AppController
 {
+    /**
+     * Making sure that we use the Posts plugin's model layer
+     *
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();
