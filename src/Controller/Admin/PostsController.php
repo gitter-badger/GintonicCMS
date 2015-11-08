@@ -2,8 +2,8 @@
 namespace GintonicCMS\Controller\Admin;
 
 use App\Controller\Admin\AppController;
-use Posts\Model\Entity\Post;
 use Cake\Event\Event;
+use Posts\Model\Entity\Post;
 
 /**
  * Posts Controller
@@ -12,16 +12,26 @@ use Cake\Event\Event;
  */
 class PostsController extends AppController
 {
+    /**
+     * Disables the extra crud-view buttons so that we only keep 'save'
+     *
+     * @return void
+     */
     public function beforeFilter(Event $event)
     {
         $action = $this->Crud->action();
         $action->config('scaffold.extra_buttons_blacklist', [
-            'save_and_continue', 
+            'save_and_continue',
             'save_and_create',
             'back',
         ]);
     }
 
+    /**
+     * Setting the 'status' dropdown to the options from the model
+     *
+     * @return void
+     */
     public function add()
     {
         $action = $this->Crud->action();

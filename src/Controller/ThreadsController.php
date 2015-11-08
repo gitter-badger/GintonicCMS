@@ -16,6 +16,11 @@ class ThreadsController extends AppController
         'limit' => 5,
     ];
 
+    /**
+     * Setting $this->Threads to the model in the Messages plugin
+     *
+     * @return void
+     */
     public function initialize()
     {
         $this->loadModel('Messages.Threads');
@@ -66,7 +71,7 @@ class ThreadsController extends AppController
                     $this->setAction('index');
                 }
                 return;
-            } 
+            }
         }
         $this->set([
             'success' => false,
