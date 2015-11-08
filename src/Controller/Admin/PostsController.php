@@ -12,6 +12,12 @@ use Posts\Model\Entity\Post;
  */
 class PostsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('Posts.Posts');
+    }
+
     /**
      * Disables the extra crud-view buttons so that we only keep 'save'
      *
