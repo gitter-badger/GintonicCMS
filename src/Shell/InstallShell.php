@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 /**
  * Update shell command.
  */
-class UpdateShell extends Shell
+class InstallShell extends Shell
 {
     /**
      * main() method.
@@ -26,11 +26,11 @@ class UpdateShell extends Shell
             return false;
         }
 
-        $this->composer('update');
+        $this->composer('install');
 
         $this->migrate();
         $this->migrate('Users');
-        $this->migrate('Payments');
+        $this->migrate('Posts');
         $this->migrate('Messages');
         $this->migrate('Acl');
 
