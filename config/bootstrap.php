@@ -31,7 +31,7 @@ Plugin::load('FOC/Authenticate');
 Plugin::load('Permissions', ['routes' => true]);
 
 // Application base
-Plugin::load('Posts', ['routes' => true, 'bootstrap' => 'true']);
+Plugin::load('Posts', ['bootstrap' => 'true']);
 Plugin::load('Messages', ['routes' => true, 'bootstrap' => 'true']);
 
 
