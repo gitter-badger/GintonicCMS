@@ -10,6 +10,11 @@ use App\Controller\AppController;
  */
 class PostsController extends AppController
 {
+    /**
+     * Making sure that we use the Posts plugin's model layer
+     *
+     * @return void
+     */
     public function initialize()
     {
         $this->loadModel('Posts.Posts');
@@ -39,5 +44,4 @@ class PostsController extends AppController
         $this->set('post', $post);
         $this->set('_serialize', ['post']);
     }
-
 }
