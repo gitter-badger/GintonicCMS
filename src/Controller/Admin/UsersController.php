@@ -3,6 +3,7 @@ namespace GintonicCMS\Controller\Admin;
 
 use App\Controller\Admin\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -19,5 +20,33 @@ class UsersController extends AppController
     {
         $action = $this->Crud->action();
         $action->config('scaffold.fields_blacklist', ['password', 'token']);
+    }
+
+    public function index()
+    {
+        $this->Crud->on('beforePaginate', function (Event $event) {
+            $usersTable = TableRegistry::get('Users.Users');
+            $event->subject()->query = $usersTable
+                ->find('role')
+                ->select($usersTable);
+        });
+
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', [
+            'id',
+            'email',
+            'username',
+            'verified',
+            'role',
+            'created',
+            'modified',
+            'deleted',
+            'role' => [
+                'formatter' => function ($name, $value, $entity){
+                    return $entity['role']['alias'];
+                },
+            ],
+        ]);
+        $this->Crud->execute();
     }
 }
