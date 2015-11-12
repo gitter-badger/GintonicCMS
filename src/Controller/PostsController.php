@@ -40,7 +40,7 @@ class PostsController extends AppController
      */
     public function view($slug)
     {
-        $post = $this->Posts->find('slugged', ['slug' => $slug]);
+        $post = $this->Posts->find('slugged', ['slug' => $slug])->first();
         $this->set('post', $post);
         $this->set('_serialize', ['post']);
     }
