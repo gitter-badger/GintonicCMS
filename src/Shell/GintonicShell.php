@@ -99,7 +99,7 @@ class GintonicShell extends Shell
      */
     public function createAppConfig()
     {
-        $appConfig = ROOT. '/config/app.php';
+        $appConfig = ROOT . '/config/app.php';
         $defaultConfig = ROOT . '/config/app.default.php';
         if (!file_exists($appConfig)) {
             copy($defaultConfig, $appConfig);

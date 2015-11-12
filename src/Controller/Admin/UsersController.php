@@ -22,6 +22,11 @@ class UsersController extends AppController
         $action->config('scaffold.fields_blacklist', ['password', 'token']);
     }
 
+    /**
+     * index
+     *
+     * Adds edited to display the role of users
+     */
     public function index()
     {
         $this->Crud->on('beforePaginate', function (Event $event) {
@@ -42,7 +47,7 @@ class UsersController extends AppController
             'modified',
             'deleted',
             'role' => [
-                'formatter' => function ($name, $value, $entity){
+                'formatter' => function ($name, $value, $entity) {
                     return $entity['role']['alias'];
                 },
             ],
