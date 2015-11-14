@@ -13,11 +13,15 @@ use Symfony\Component\Console\Input\ArrayInput;
  */
 class GintonicShell extends Shell
 {
+    /**
+     * {@inherit}
+     */
     public function initialize()
     {
         parent::initialize();
         $this->loadModel('Aros');
     }
+
     /**
      * main() method.
      *
@@ -100,7 +104,7 @@ class GintonicShell extends Shell
     public function setRole($role)
     {
         $count = $this->Aros->find()->where(['alias' => $role])->count();
-        if(!$count) {
+        if (!$count) {
             $this->dispatchShell('acl create aro root ' . $role);
         }
     }
