@@ -13,6 +13,11 @@ use Symfony\Component\Console\Input\ArrayInput;
  */
 class GintonicShell extends Shell
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('Aros');
+    }
     /**
      * main() method.
      *
@@ -42,6 +47,11 @@ class GintonicShell extends Shell
 
         $this->symlinks();
         $this->permissions();
+
+        $this->setRole('admin');
+        $this->setRole('user');
+        $this->setRole('visitor');
+
         $this->cleanup();
     }
 
@@ -84,6 +94,16 @@ class GintonicShell extends Shell
         $this->dispatchShell('migrations migrate' . $plugin);
     }
 
+    /**
+     * todo
+     */
+    public function setRole($role)
+    {
+        $count = $this->Aros->find()->where(['alias' => $role])->count();
+        if(!$count) {
+            $this->dispatchShell('acl create aro root ' . $role);
+        }
+    }
     /**
      * todo
      */
