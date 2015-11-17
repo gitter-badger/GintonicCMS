@@ -43,6 +43,16 @@ class PostsController extends AppController
      *
      * @return void
      */
+    public function index()
+    {
+        return $this->Crud->execute();
+    }
+
+    /**
+     * Setting the 'status' dropdown to the options from the model
+     *
+     * @return void
+     */
     public function add()
     {
         $action = $this->Crud->action();
