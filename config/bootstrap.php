@@ -4,8 +4,6 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Routing\DispatcherFactory;
 
-Plugin::load('Acl', ['bootstrap' => true]);
-
 // Crud stack
 Plugin::load('BootstrapUI');
 Plugin::load('Crud');
