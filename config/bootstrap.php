@@ -17,7 +17,7 @@ Configure::write('Websockets.userModel', 'Users.Users');
 Configure::write('Websockets.scope', false);
 
 // File management
-Plugin::load('Images', ['routes' => true, 'bootstrap' => true]);
+Plugin::load('Images', ['bootstrap' => true]);
 
 // Themes
 Plugin::load('AdminTheme');
