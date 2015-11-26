@@ -2,7 +2,9 @@
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Event\EventManager;
 use Cake\Routing\DispatcherFactory;
+use Permissions\Listener\RoleListener;
 
 // Crud stack
 Plugin::load('BootstrapUI');
@@ -27,6 +29,8 @@ Plugin::load('TwbsTheme');
 Plugin::load('Users', ['routes' => true, 'bootstrap' => 'true']);
 Plugin::load('FOC/Authenticate');
 Plugin::load('Permissions', ['routes' => true]);
+EventManager::instance()->attach(new RoleListener());
+
 
 // Application base
 Plugin::load('Posts', ['bootstrap' => 'true']);
