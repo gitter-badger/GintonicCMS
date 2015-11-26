@@ -50,4 +50,11 @@ class UsersController extends AppController
         $action->config('scaffold.fields_blacklist', ['created', 'modified']);
         return $this->Crud->execute();
     }
+
+    public function view()
+    {
+        $action = $this->Crud->action();
+        $action->config('scaffold.relations');
+        return $this->Crud->execute();
+    }
 }
