@@ -8,8 +8,11 @@ use Cake\View\Helper;
 class ThreadedHelper extends Helper
 {
     /**
-     * TODO: doc comment
+     * Transform threaded data into an unsorted list
      *
+     * @param array $items the threaded data
+     * @param string $key the key to use as display field
+     * @return string
      */
     public function ul(array $items, $key)
     {

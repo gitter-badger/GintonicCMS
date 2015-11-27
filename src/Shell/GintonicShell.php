@@ -14,14 +14,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 class GintonicShell extends Shell
 {
     /**
-     * {@inherit}
-     */
-    public function initialize()
-    {
-        parent::initialize();
-    }
-
-    /**
      * main() method.
      *
      * @return bool|int Success or error code.
@@ -41,13 +33,15 @@ class GintonicShell extends Shell
         $this->migrate('Messages');
         $this->migrate('Permissions');
 
-        $this->symlinks();
+        $this->dispatchShell('plugin assets symlink');
 
         $this->cleanup();
     }
 
     /**
-     * todo
+     * Clears the cache
+     *
+     * @return void
      */
     public function cleanup()
     {
@@ -59,15 +53,10 @@ class GintonicShell extends Shell
     }
 
     /**
-     * todo
-     */
-    public function symlinks($plugin = null)
-    {
-        $this->dispatchShell('plugin assets symlink');
-    }
-
-    /**
-     * todo
+     * Run the migration, optionally for a plugin
+     *
+     * @param string $plugin Plugin name (optional)
+     * @return void
      */
     public function migrate($plugin = null)
     {

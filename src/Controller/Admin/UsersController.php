@@ -14,8 +14,7 @@ use Permissions\Model\Entity\Role;
 class UsersController extends AppController
 {
     /**
-     * The password and token fields shouldn't be displayed
-     * in the admin panel
+     * {@inheritDoc}
      */
     public function beforeFilter(Event $event)
     {
@@ -44,17 +43,30 @@ class UsersController extends AppController
         $this->Crud->listener('relatedModels')->relatedModels(['Roles'], 'index');
     }
 
+    /**
+     * Index method
+     * Don't show created and modified fields
+     *
+     * @return void
+     */
     public function index()
     {
         $action = $this->Crud->action();
         $action->config('scaffold.fields_blacklist', ['created', 'modified']);
-        return $this->Crud->execute();
+        $this->Crud->execute();
     }
 
+    /**
+     * View method
+     * Related models are blacklisted because the role is already present in
+     * the main user panel
+     *
+     * @return void
+     */
     public function view()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.relations');
-        return $this->Crud->execute();
+        $action->config('scaffold.relations', false);
+        $this->Crud->execute();
     }
 }

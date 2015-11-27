@@ -29,6 +29,7 @@ class ThreadsController extends AppController
     /**
      * View method
      *
+     * @param int $id Thread id
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */

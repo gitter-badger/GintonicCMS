@@ -34,7 +34,7 @@ class PostsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Post id.
+     * @param string|null $slug The post's slug is used as the key
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */

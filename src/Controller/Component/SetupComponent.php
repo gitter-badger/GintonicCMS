@@ -13,7 +13,7 @@ class SetupComponent extends Component
     /**
      * Runs the migrations for a given plugin
      *
-     * @param string $tableName Name of the table to check.
+     * @param string $plugin Name of the plugin
      * @return void
      */
     public function runMigration($plugin)
@@ -28,6 +28,7 @@ class SetupComponent extends Component
      * Check whether table is exists in database or not.
      *
      * @param string $tableName Name of the table to check.
+     * @param string $connectionName Connection to use
      * @return bool True if table exists, False else.
      */
     public function tableExists($tableName, $connectionName = 'default')

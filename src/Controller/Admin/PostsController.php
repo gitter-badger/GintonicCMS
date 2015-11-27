@@ -26,6 +26,7 @@ class PostsController extends AppController
     /**
      * Disables the extra crud-view buttons so that we only keep 'save'
      *
+     * @param \Cake\Event\Event $event Event data
      * @return void
      */
     public function beforeFilter(Event $event)
@@ -45,7 +46,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        return $this->Crud->execute();
+        $this->Crud->execute();
     }
 
     /**
@@ -68,6 +69,6 @@ class PostsController extends AppController
                 'options' => Post::statuses(),
             ],
         ]);
-        return $this->Crud->execute();
+        $this->Crud->execute();
     }
 }
