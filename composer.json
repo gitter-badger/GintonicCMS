@@ -37,7 +37,6 @@
         "gintonicweb/users": "@dev",
         "gintonicweb/requirejs": "~0.1",
         "gintonicweb/websockets": "dev-master",
-        "josegonzalez/cakephp-upload": "3.*@dev",
         "league/glide": "dev-master",
         "admad/cakephp-glide": "dev-master",
         "admad/cakephp-jwt-auth": "1.0.*@dev",
