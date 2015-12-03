@@ -27,29 +27,22 @@ class ThreadsController extends AppController
     }
 
     /**
-     * View method
+     * The threads index page is populated via javascript + the API.
      *
      * @param int $id Thread id
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function index($id = null)
+    public function view($id = null)
     {
-        $userId = $this->Auth->user('id');
-        if (!$userId) {
-            throw new UnauthorizedException('You need to be authenticated to access this section');
+        if ($id === null || !$this->Threads->get($id)) {
+            $id = $this->Threads->find()
+                ->find('participating', [$this->Auth->user('id')])
+                ->order(['Threads.modified' => 'DESC'])
+                ->extract('id')
+                ->first();
         }
-
-        if ($id === null) {
-            $threads = $this->Threads->find('summary', [$userId]);
-            $thread = $threads->select('id')->first();
-            if ($thread) {
-                $id = $thread->id;
-            }
-        }
-
-        $this->set('id', $id);
-        $this->set('_serialize', ['id']);
+        $this->set(compact('id'));
     }
 
     /**
@@ -66,7 +59,6 @@ class ThreadsController extends AppController
                 $this->set([
                     'success' => true,
                     'data' => ['id' => $thread->id],
-                    '_serialize' => ['success', 'data']
                 ]);
                 if (!$this->request->params['isAjax']) {
                     $this->setAction('index');
@@ -74,9 +66,6 @@ class ThreadsController extends AppController
                 return;
             }
         }
-        $this->set([
-            'success' => false,
-            '_serialize' => ['success']
-        ]);
+        $this->set(['success' => false]);
     }
 }
