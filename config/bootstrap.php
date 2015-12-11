@@ -11,6 +11,7 @@ Plugin::load('BootstrapUI');
 Plugin::load('Crud');
 Plugin::load('CrudView');
 Plugin::load('Search');
+Configure::write('CrudView', []);
 
 // Javascript
 Plugin::load('Requirejs');
