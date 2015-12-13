@@ -5,6 +5,7 @@ use Cake\Core\Plugin;
 use Cake\Event\EventManager;
 use Cake\Routing\DispatcherFactory;
 use Permissions\Listener\RoleListener;
+use Websockets\Listener\WebsocketsListener;
 
 // Crud stack
 Plugin::load('BootstrapUI');
@@ -16,6 +17,7 @@ Configure::write('CrudView', []);
 // Javascript
 Plugin::load('Requirejs');
 Plugin::load('Websockets', ['bootstrap' => true]);
+EventManager::instance()->attach(new WebsocketsListener());
 Configure::write('Websockets.userModel', 'Users.Users');
 Configure::write('Websockets.scope', false);
 
