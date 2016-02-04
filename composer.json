@@ -20,8 +20,7 @@
         "source": "https://github.com/gintonicweb/GintonicCMS"
     },
     "require": {
-        "php": ">=5.4.16",
-        "cakephp/cakephp": "3.1.*@beta",
+        "cakephp/cakephp": "~3.0",
         "composer/composer": "^1.0@dev",
         "friendsofcake/authenticate": "dev-cake3",
         "FriendsOfCake/bootstrap-ui": "~0.3",
@@ -31,6 +30,7 @@
         "gintonicweb/admin-theme": "dev-master",
         "gintonicweb/images": "dev-master",
         "gintonicweb/messages": "dev-master",
+        "gintonicweb/menus": "dev-master",
         "gintonicweb/permissions": "dev-master",
         "gintonicweb/posts": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
@@ -43,8 +43,7 @@
         "muffin/trash": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
-        "cakephp/cakephp-codesniffer": "2.*"
+        "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {
@@ -53,7 +52,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
             "GintonicCMS\\Test\\": "tests"
         }
     }
