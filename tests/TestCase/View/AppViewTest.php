@@ -155,7 +155,7 @@ class ViewTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = ['core.users', 'core.posts'];
+    public $fixtures = ['plugin.GintonicCMS.users'];
 
     /**
      * setUp method
