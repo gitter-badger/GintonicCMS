@@ -35,7 +35,7 @@
         "gintonicweb/posts": "dev-master",
         "gintonicweb/twbs-theme": "dev-master",
         "gintonicweb/users": "@dev",
-        "gintonicweb/requirejs": "~0.1",
+        "gintonicweb/requirejs": "~0.2",
         "gintonicweb/websockets": "dev-master",
         "league/glide": "dev-master",
         "admad/cakephp-glide": "dev-master",
